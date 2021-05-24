@@ -29,38 +29,38 @@ export const fetchAccountHotspots = (address: string) => {
   return useQuery('accountHotspots', () => fetchAccount(address, HOTSPOTS));
 };
 
-export const fetchAccountOuis = async (address: string) => {
+export const fetchAccountOuis = (address: string) => {
   return useQuery('accountOUIs', () => fetchAccount(address, OUIS));
 };
 
-export const fetchAccountActivity = async (address: string) => {
+export const fetchAccountActivity = (address: string) => {
   return useQuery('accountActivity', () => fetchAccount(address, ACTIVITY));
 };
 
-export const fetchAccountActivityCount = async (address: string) => {
+export const fetchAccountActivityCount = (address: string) => {
   return useQuery('accountActivityCount', () => fetchAccount(address, ACTIVITY_COUNT));
 };
 
-export const fetchAccountElections = async (address: string) => {
+export const fetchAccountElections = (address: string) => {
   return useQuery('accountElections', () => fetchAccount(address, ELECTIONS));
 };
 
-export const fetchAccountChallenges = async (address: string) => {
+export const fetchAccountChallenges = (address: string) => {
   return useQuery('accountChallenges', () => fetchAccount(address, CHALLENGES));
 };
 
-export const fetchAccountPendingTxns = async (address: string) => {
+export const fetchAccountPendingTxns = (address: string) => {
   return useQuery('accountPendingTxns', () => fetchAccount(address, PENDING_TXNS));
 };
 
-export const fetchAccountRewards = async (address: string) => {
+export const fetchAccountRewards = (address: string) => {
   return useQuery('accountRewards', () => fetchAccount(address, REWARDS));
 };
 
-export const fetchAccountRewardTotals = async (address: string) => {
+export const fetchAccountRewardTotals = (address: string) => {
   return useQuery('accountRewardTotals', () => fetchAccount(address, REWARD_TOTALS));
 };
 
-export const fetchAccountStats = async (address: string) => {
+export const fetchAccountStats = (address: string) => {
   return useQuery('accountStats', () => fetchAccount(address, STATS));
 };
