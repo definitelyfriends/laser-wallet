@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/lxieyang/chrome-extension-boilerplate-react.git"
   },
+  "resolutions": {
+    "styled-components": "^5"
+  },
   "scripts": {
     "build": "node utils/build.js",
     "dev": "node utils/webserver.js",
@@ -23,7 +26,8 @@
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.13.0",
     "react-query": "^3.16.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.17",
@@ -33,6 +37,7 @@
     "autoprefixer": "^10.2.5",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
+    "babel-plugin-styled-components": "^1.12.0",
     "babel-preset-react-app": "^10.0.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^7.0.0",
