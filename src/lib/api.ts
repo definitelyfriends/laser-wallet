@@ -10,3 +10,13 @@ export const fetchAccount = async (address: string) => {
 
   return response.json();
 };
+
+export const fetchAccountHotspots = async (address: string) => {
+  const response = await fetch(`${accounts}/${address}/hotspots`);
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  return response.json();
+};
