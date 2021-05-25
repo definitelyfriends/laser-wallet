@@ -16,10 +16,15 @@
     "prettier": "prettier --write '**/*.{js,jsx,css,html}'"
   },
   "dependencies": {
+    "@helium/crypto": "^3.24.0",
+    "@helium/http": "^3.36.1",
+    "@helium/transactions": "^3.34.0",
     "@hot-loader/react-dom": "^17.0.1",
     "@types/chrome": "0.0.132",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
     "postcss": "^8.3.0",
     "postcss-loader": "^5.3.0",
     "react": "^17.0.1",
@@ -27,6 +32,7 @@
     "react-hot-loader": "^4.13.0",
     "react-query": "^3.16.0",
     "react-router-dom": "^5.2.0",
+    "stream-browserify": "^3.0.0",
     "styled-components": "^5.3.0"
   },
   "devDependencies": {
