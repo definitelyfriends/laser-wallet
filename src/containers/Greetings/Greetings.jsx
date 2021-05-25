@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import icon from '../../assets/img/icon-128.png';
 
 class GreetingComponent extends Component {
