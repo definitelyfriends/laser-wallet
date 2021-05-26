@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { split, map } from 'ramda';
 import { Keypair } from '@helium/crypto';
 import { Buffer } from 'buffer';
 import { useBooleanCheckboxes } from 'src/hooks/useBooleanCheckbox';
@@ -11,15 +12,17 @@ declare global {
 
 window.Buffer = Buffer;
 
+const lowercase = (word: string) => word.toLowerCase();
+
 const ImportSeed: React.FC = () => {
   const { checked, setChecked } = useBooleanCheckboxes();
   const [seedPhrase, setSeedPhrase] = useState('');
 
   const doPassphrase = async () => {
-    const phrase = seedPhrase.split(' ');
+    const phrase = map(lowercase, split(' ', seedPhrase));
     const bob = await Keypair.fromWords(phrase);
 
-    console.log(bob);
+    console.log(await bob);
   };
 
   return (
