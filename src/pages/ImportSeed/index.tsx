@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { split, map } from 'ramda';
-import { Keypair } from '@helium/crypto';
 import { Buffer } from 'buffer';
+import Vault from 'src/lib/vault';
 import { useBooleanCheckboxes } from 'src/hooks/useBooleanCheckbox';
 
 declare global {
@@ -17,12 +16,10 @@ const lowercase = (word: string) => word.toLowerCase();
 const ImportSeed: React.FC = () => {
   const { checked, setChecked } = useBooleanCheckboxes();
   const [seedPhrase, setSeedPhrase] = useState('');
+  const [password, setPassword] = useState(null);
 
   const doPassphrase = async () => {
-    const phrase = map(lowercase, split(' ', seedPhrase));
-    const bob = await Keypair.fromWords(phrase);
-
-    console.log(await bob);
+    const vault = Vault.create({ seedPhrase, password })
   };
 
   return (
