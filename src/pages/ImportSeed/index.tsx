@@ -6,20 +6,23 @@ import { useBooleanCheckboxes } from 'src/hooks/useBooleanCheckbox';
 declare global {
   interface Window {
     Buffer: any;
+    bob: any;
+    vvv: any;
+    keypair: any;
+    KP: any;
+    localforage: any;
   }
 }
 
 window.Buffer = Buffer;
 
-const lowercase = (word: string) => word.toLowerCase();
-
 const ImportSeed: React.FC = () => {
   const { checked, setChecked } = useBooleanCheckboxes();
   const [seedPhrase, setSeedPhrase] = useState('');
-  const [password, setPassword] = useState(null);
+  const [password, setPassword] = useState('');
 
   const doPassphrase = async () => {
-    const vault = Vault.create({ seedPhrase, password })
+    const newVault = Vault({ seedPhrase, password });
   };
 
   return (
@@ -40,6 +43,14 @@ const ImportSeed: React.FC = () => {
           />
         )}
       </div>
+      <label>Password</label>
+      <input
+        aria-invalid="false"
+        placeholder="Paste seed phrase from clipboard"
+        type="password"
+        dir="auto"
+        onChange={e => setPassword(e.target.value)}
+      />
       <button onClick={doPassphrase}>do phrase thing</button>
       <div>
         <input

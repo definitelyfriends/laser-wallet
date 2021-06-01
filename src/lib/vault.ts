@@ -1,40 +1,52 @@
 import { Keypair } from '@helium/crypto';
 import { split, map } from 'ramda';
-import {storeItem} from 'src/lib/store'
+import CryptoES from 'crypto-es';
+import localForage from 'localforage';
+import { storeItem } from 'src/lib/store';
 
 interface Vault {
-  password: string
-  phrase: string
+  password: string;
+  seedPhrase: string;
 }
 
-const Vault = () => {
-  const _lowercase = (word: string) => word.toLowerCase();
+const lowercase = (word: string) => word.toLowerCase();
 
-  function _convertToArray(seedPhrase: string): string[] {
-    return map(_lowercase, split(' ', seedPhrase));
-  }
+const convertToArray = (seedPhrase: string): string[] => {
+  return map(lowercase, split(' ', seedPhrase));
+};
 
-  async function create({ password, phrase }: Vault) {
-    const keypair = await Keypair.fromWords(_convertToArray(phrase));
+const toBase64 = (key: Uint8Array) => Buffer.from(key).toString('base64');
 
-    await storeItem('password', password);
-    await storeItem('publicKey', keypair.publicKey);
-    await storeItem('privateKey', keypair.privateKey);
-  }
+const createNewVault = async ({ password, seedPhrase }: Vault) => {
+  const keypair = await Keypair.fromWords(convertToArray(seedPhrase));
 
-  function encrypt() {
+  const privateKey = toBase64(keypair.privateKey);
+  const publicKey = toBase64(keypair.publicKey);
+  const address = keypair.address.b58;
 
-  }
+  await storeItem('privateKey', encrypt(privateKey, password));
+  await storeItem('publicKey', encrypt(publicKey, password));
+  await storeItem('address', address);
+};
 
-  function decrypt(password: string) {
+const encrypt = (phrase: string, password: string) => {
+  return CryptoES.AES.encrypt(JSON.stringify(phrase), password).toString();
+};
 
-  }
+const decrypt = async (password: string) => {
+  const stored: any = await localForage.getItem('privateKey');
+  const decrypted = CryptoES.AES.decrypt(stored, password);
+
+  return decrypted.toString(CryptoES.enc.Utf8);
+};
+
+const Vault = ({ seedPhrase, password }: Vault) => {
+  createNewVault({ seedPhrase, password });
 
   return {
-    create,
     encrypt,
-    decrypt
-  }
-}
+    decrypt,
+  };
+};
 
 export default Vault;
