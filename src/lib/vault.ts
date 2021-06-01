@@ -1,26 +1,16 @@
 import { Keypair } from '@helium/crypto';
-import { split, map } from 'ramda';
 import CryptoES from 'crypto-es';
 import localForage from 'localforage';
 import { storeItem } from 'src/lib/store';
-
+import { lowercase, convertToArray, toBase64 } from './vault.utils';
 interface Vault {
   password: string;
   seedPhrase: string;
 }
-
 interface VaultFuncs {
   encrypt: (phrase: string, password: string) => string;
   decrypt: (password: string) => Promise<string>;
 }
-
-const lowercase = (word: string) => word.toLowerCase();
-
-const convertToArray = (seedPhrase: string): string[] => {
-  return map(lowercase, split(' ', seedPhrase));
-};
-
-const toBase64 = (key: Uint8Array): string => Buffer.from(key).toString('base64');
 
 const createNewVault = async ({ password, seedPhrase }: Vault): Promise<void> => {
   const keypair = await Keypair.fromWords(convertToArray(seedPhrase));
