@@ -16,6 +16,6 @@
     "jsx": "react",
     "noImplicitAny": true
   },
-  "include": ["src"],
+  "include": ["src", "src/types/global.d.ts"],
   "exclude": ["build", "node_modules"]
 }

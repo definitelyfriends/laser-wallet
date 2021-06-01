@@ -9,15 +9,20 @@ interface Vault {
   seedPhrase: string;
 }
 
+interface VaultFuncs {
+  encrypt: (phrase: string, password: string) => string;
+  decrypt: (password: string) => Promise<string>;
+}
+
 const lowercase = (word: string) => word.toLowerCase();
 
 const convertToArray = (seedPhrase: string): string[] => {
   return map(lowercase, split(' ', seedPhrase));
 };
 
-const toBase64 = (key: Uint8Array) => Buffer.from(key).toString('base64');
+const toBase64 = (key: Uint8Array): string => Buffer.from(key).toString('base64');
 
-const createNewVault = async ({ password, seedPhrase }: Vault) => {
+const createNewVault = async ({ password, seedPhrase }: Vault): Promise<void> => {
   const keypair = await Keypair.fromWords(convertToArray(seedPhrase));
 
   const privateKey = toBase64(keypair.privateKey);
@@ -29,19 +34,23 @@ const createNewVault = async ({ password, seedPhrase }: Vault) => {
   await storeItem('address', address);
 };
 
-const encrypt = (phrase: string, password: string) => {
+const encrypt = (phrase: string, password: string): string => {
   return CryptoES.AES.encrypt(JSON.stringify(phrase), password).toString();
 };
 
-const decrypt = async (password: string) => {
+const decrypt = async (password: string): Promise<string> => {
   const stored: any = await localForage.getItem('privateKey');
   const decrypted = CryptoES.AES.decrypt(stored, password);
 
   return decrypted.toString(CryptoES.enc.Utf8);
 };
 
-const Vault = ({ seedPhrase, password }: Vault) => {
-  createNewVault({ seedPhrase, password });
+const Vault = async ({ seedPhrase, password }: Vault): Promise<VaultFuncs> => {
+  try {
+    await createNewVault({ seedPhrase, password });
+  } catch (error) {
+    console.log(error);
+  }
 
   return {
     encrypt,

@@ -3,19 +3,6 @@ import { Buffer } from 'buffer';
 import Vault from 'src/lib/vault';
 import { useBooleanCheckboxes } from 'src/hooks/useBooleanCheckbox';
 
-declare global {
-  interface Window {
-    Buffer: any;
-    bob: any;
-    vvv: any;
-    keypair: any;
-    KP: any;
-    localforage: any;
-  }
-}
-
-window.Buffer = Buffer;
-
 const ImportSeed: React.FC = () => {
   const { checked, setChecked } = useBooleanCheckboxes();
   const [seedPhrase, setSeedPhrase] = useState('');
