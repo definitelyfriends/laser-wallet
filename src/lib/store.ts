@@ -1,11 +1,9 @@
 import localForage from 'localforage';
 
-export const storeItem = (key: any, value: any) => {
-  localForage
-    .setItem(key, value)
-    .then(function () {
-      return localForage.getItem(key);
-    })
-    .then(function (value) {})
-    .catch(function (err) {});
+export const storeItem = async (key: any, value: any) => {
+  return await localForage.setItem(key, value);
+};
+
+export const fetchItem = async (key: any) => {
+  return await localForage.getItem(key);
 };

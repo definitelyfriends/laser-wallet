@@ -14,7 +14,14 @@
     "resolveJsonModule": true,
     "noEmit": false,
     "jsx": "react",
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "paths": {
+      "lib/*": ["./src/lib/*"],
+      "containers/*": ["./src/containers/*"],
+      "pages/*": ["./src/pages/*"],
+      "hooks/*": ["./src/hooks/*"],
+      "src/*": ["./src/*"]
+    }
   },
   "include": ["src", "src/types/global.d.ts"],
   "exclude": ["build", "node_modules"]

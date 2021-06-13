@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
-import { Buffer } from 'buffer';
-import Vault from 'src/lib/vault';
-import { useBooleanCheckboxes } from 'src/hooks/useBooleanCheckbox';
+import { useHistory } from 'react-router-dom';
+import { createVault } from 'lib/vault';
+import { useBooleanCheckboxes } from 'hooks/useBooleanCheckbox';
 
 const ImportSeed: React.FC = () => {
   const { checked, setChecked } = useBooleanCheckboxes();
   const [seedPhrase, setSeedPhrase] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
 
   const doPassphrase = async () => {
-    const newVault = Vault({ seedPhrase, password });
+    const created = await createVault({ seedPhrase, password });
+
+    if (created) {
+      // route to home screen
+      history.push('/home');
+      // fetch HNT amount
+      // show HNT amount in USD
+      return;
+    }
   };
+
+  const goHome = () => history.push('/home');
 
   return (
     <div>
       <h1>Restore your Account with Seed Phrase</h1>
       <h3>Enter your secret phrase here to restore your vault.</h3>
+      <button onClick={() => goHome()}>go home</button>
       <div>
         <label>Wallet Seed</label>
         {checked ? (
