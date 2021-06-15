@@ -14,7 +14,7 @@ const STATS = 'stats';
 const baseUrl = 'https://api.helium.io/v1';
 const accounts = `${baseUrl}/accounts`;
 
-export const fetchAccount = async (address: string, type = '') => {
+export const fetchAccountBase = async (address: string, type = '') => {
   const accountUrl = `${accounts}/${address}/${type}`;
   const response = await fetch(accountUrl);
 
@@ -25,42 +25,46 @@ export const fetchAccount = async (address: string, type = '') => {
   return response.json();
 };
 
+export const fetchAccount = (address: string) => {
+  return useQuery('account', () => fetchAccountBase(address));
+};
+
 export const fetchAccountHotspots = (address: string) => {
-  return useQuery('accountHotspots', () => fetchAccount(address, HOTSPOTS));
+  return useQuery('accountHotspots', () => fetchAccountBase(address, HOTSPOTS));
 };
 
 export const fetchAccountOuis = (address: string) => {
-  return useQuery('accountOUIs', () => fetchAccount(address, OUIS));
+  return useQuery('accountOUIs', () => fetchAccountBase(address, OUIS));
 };
 
 export const fetchAccountActivity = (address: string) => {
-  return useQuery('accountActivity', () => fetchAccount(address, ACTIVITY));
+  return useQuery('accountActivity', () => fetchAccountBase(address, ACTIVITY));
 };
 
 export const fetchAccountActivityCount = (address: string) => {
-  return useQuery('accountActivityCount', () => fetchAccount(address, ACTIVITY_COUNT));
+  return useQuery('accountActivityCount', () => fetchAccountBase(address, ACTIVITY_COUNT));
 };
 
 export const fetchAccountElections = (address: string) => {
-  return useQuery('accountElections', () => fetchAccount(address, ELECTIONS));
+  return useQuery('accountElections', () => fetchAccountBase(address, ELECTIONS));
 };
 
 export const fetchAccountChallenges = (address: string) => {
-  return useQuery('accountChallenges', () => fetchAccount(address, CHALLENGES));
+  return useQuery('accountChallenges', () => fetchAccountBase(address, CHALLENGES));
 };
 
 export const fetchAccountPendingTxns = (address: string) => {
-  return useQuery('accountPendingTxns', () => fetchAccount(address, PENDING_TXNS));
+  return useQuery('accountPendingTxns', () => fetchAccountBase(address, PENDING_TXNS));
 };
 
 export const fetchAccountRewards = (address: string) => {
-  return useQuery('accountRewards', () => fetchAccount(address, REWARDS));
+  return useQuery('accountRewards', () => fetchAccountBase(address, REWARDS));
 };
 
 export const fetchAccountRewardTotals = (address: string) => {
-  return useQuery('accountRewardTotals', () => fetchAccount(address, REWARD_TOTALS));
+  return useQuery('accountRewardTotals', () => fetchAccountBase(address, REWARD_TOTALS));
 };
 
 export const fetchAccountStats = (address: string) => {
-  return useQuery('accountStats', () => fetchAccount(address, STATS));
+  return useQuery('accountStats', () => fetchAccountBase(address, STATS));
 };

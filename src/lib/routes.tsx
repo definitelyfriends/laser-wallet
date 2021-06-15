@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Route, MemoryRouter, Switch } from 'react-router-dom';
-import Home from 'containers/Home';
 import Newtab from 'pages/Newtab/Newtab';
+
+const Home = React.lazy(() => import('containers/Home'));
 
 const Routes: React.FC = () => {
   return (
@@ -11,7 +12,9 @@ const Routes: React.FC = () => {
           <Newtab />
         </Route>
         <Route exact path="/home">
-          <Home />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Home />
+          </Suspense>
         </Route>
       </Switch>
     </MemoryRouter>

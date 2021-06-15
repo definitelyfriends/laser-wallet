@@ -20,7 +20,8 @@
       "containers/*": ["./src/containers/*"],
       "pages/*": ["./src/pages/*"],
       "hooks/*": ["./src/hooks/*"],
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
+      "api/*": ["./src/api/*"]
     }
   },
   "include": ["src", "src/types/global.d.ts"],

@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import React from 'react';
-import ImportSeed from 'pages/ImportSeed';
+import ImportSeed from 'containers/ImportSeed';
 import logo from 'assets/img/logo.svg';
 import './Newtab.css';
 import './Newtab.scss';

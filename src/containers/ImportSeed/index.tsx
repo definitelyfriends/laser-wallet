@@ -9,7 +9,7 @@ const ImportSeed: React.FC = () => {
   const [password, setPassword] = useState('');
   const history = useHistory();
 
-  const doPassphrase = async () => {
+  const importAccount = async () => {
     const created = await createVault({ seedPhrase, password });
 
     if (created) {
@@ -21,13 +21,10 @@ const ImportSeed: React.FC = () => {
     }
   };
 
-  const goHome = () => history.push('/home');
-
   return (
     <div>
       <h1>Restore your Account with Seed Phrase</h1>
       <h3>Enter your secret phrase here to restore your vault.</h3>
-      <button onClick={() => goHome()}>go home</button>
       <div>
         <label>Wallet Seed</label>
         {checked ? (
@@ -50,7 +47,7 @@ const ImportSeed: React.FC = () => {
         dir="auto"
         onChange={e => setPassword(e.target.value)}
       />
-      <button onClick={doPassphrase}>do phrase thing</button>
+      <button onClick={importAccount}>do phrase thing</button>
       <div>
         <input
           type="checkbox"
