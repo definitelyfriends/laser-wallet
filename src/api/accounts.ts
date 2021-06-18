@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query';
+import { fetchItem } from 'lib/store';
 
 const HOTSPOTS = 'hotspots';
 const OUIS = 'ouis';
@@ -14,7 +15,21 @@ const STATS = 'stats';
 const baseUrl = 'https://api.helium.io/v1';
 const accounts = `${baseUrl}/accounts`;
 
-export const fetchAccountBase = async (address: string, type = '') => {
+// enum EndpointType {
+//   HOTSPOTS = 'HOTSPOTS',
+//   OUIS = 'OUIS',
+//   ACTIVITY = 'ACTIVITY',
+//   ACTIVITY_COUNT = 'ACTIVITY_COUNT',
+//   ELECTIONS = 'ELECTIONS',
+//   CHALLENGES = 'CHALLENGES',
+//   PENDING_TXNS = 'PENDING_TXNS',
+//   REWARDS = 'REWARDS',
+//   REWARD_TOTALS = 'REWARD_TOTALS',
+//   STATS = 'STATS',
+// }
+
+export const fetchAccountBase = async (type = '') => {
+  const address = await fetchItem('address');
   const accountUrl = `${accounts}/${address}/${type}`;
   const response = await fetch(accountUrl);
 
@@ -25,46 +40,46 @@ export const fetchAccountBase = async (address: string, type = '') => {
   return response.json();
 };
 
-export const fetchAccount = (address: string) => {
-  return useQuery('account', () => fetchAccountBase(address));
+export const fetchAccount = () => {
+  return useQuery('account', () => fetchAccountBase());
 };
 
-export const fetchAccountHotspots = (address: string) => {
-  return useQuery('accountHotspots', () => fetchAccountBase(address, HOTSPOTS));
+export const fetchAccountHotspots = () => {
+  return useQuery('accountHotspots', () => fetchAccountBase(HOTSPOTS));
 };
 
-export const fetchAccountOuis = (address: string) => {
-  return useQuery('accountOUIs', () => fetchAccountBase(address, OUIS));
+export const fetchAccountOuis = () => {
+  return useQuery('accountOUIs', () => fetchAccountBase(OUIS));
 };
 
-export const fetchAccountActivity = (address: string) => {
-  return useQuery('accountActivity', () => fetchAccountBase(address, ACTIVITY));
+export const fetchAccountActivity = () => {
+  return useQuery('accountActivity', () => fetchAccountBase(ACTIVITY));
 };
 
-export const fetchAccountActivityCount = (address: string) => {
-  return useQuery('accountActivityCount', () => fetchAccountBase(address, ACTIVITY_COUNT));
+export const fetchAccountActivityCount = () => {
+  return useQuery('accountActivityCount', () => fetchAccountBase(ACTIVITY_COUNT));
 };
 
-export const fetchAccountElections = (address: string) => {
-  return useQuery('accountElections', () => fetchAccountBase(address, ELECTIONS));
+export const fetchAccountElections = () => {
+  return useQuery('accountElections', () => fetchAccountBase(ELECTIONS));
 };
 
-export const fetchAccountChallenges = (address: string) => {
-  return useQuery('accountChallenges', () => fetchAccountBase(address, CHALLENGES));
+export const fetchAccountChallenges = () => {
+  return useQuery('accountChallenges', () => fetchAccountBase(CHALLENGES));
 };
 
-export const fetchAccountPendingTxns = (address: string) => {
-  return useQuery('accountPendingTxns', () => fetchAccountBase(address, PENDING_TXNS));
+export const fetchAccountPendingTxns = () => {
+  return useQuery('accountPendingTxns', () => fetchAccountBase(PENDING_TXNS));
 };
 
-export const fetchAccountRewards = (address: string) => {
-  return useQuery('accountRewards', () => fetchAccountBase(address, REWARDS));
+export const fetchAccountRewards = () => {
+  return useQuery('accountRewards', () => fetchAccountBase(REWARDS));
 };
 
-export const fetchAccountRewardTotals = (address: string) => {
-  return useQuery('accountRewardTotals', () => fetchAccountBase(address, REWARD_TOTALS));
+export const fetchAccountRewardTotals = () => {
+  return useQuery('accountRewardTotals', () => fetchAccountBase(REWARD_TOTALS));
 };
 
-export const fetchAccountStats = (address: string) => {
-  return useQuery('accountStats', () => fetchAccountBase(address, STATS));
+export const fetchAccountStats = () => {
+  return useQuery('accountStats', () => fetchAccountBase(STATS));
 };
