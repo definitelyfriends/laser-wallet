@@ -15,6 +15,7 @@ enum Endpoint {
   REWARDS = 'REWARDS',
   REWARD_TOTALS = 'REWARD_TOTALS',
   STATS = 'STATS',
+  NONE = '',
 }
 
 export const fetchAccountBase = async (type?: Endpoint) => {
@@ -30,7 +31,7 @@ export const fetchAccountBase = async (type?: Endpoint) => {
 };
 
 export const fetchAccount = () => {
-  return useQuery('account', () => fetchAccountBase());
+  return useQuery('account', () => fetchAccountBase(Endpoint.NONE));
 };
 
 export const fetchAccountHotspots = () => {

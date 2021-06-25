@@ -1,20 +1,16 @@
 // @ts-nocheck
 
 import React from 'react';
-import { fetchAccount } from 'api/accounts';
+import { fetchPriceAndBalance } from 'api/oracle';
 
 const DisplayHNT = () => {
-  const { isLoading, error, data } = fetchAccount();
-
-  if (isLoading) return <div>loading</div>;
-  if (error) return <div>error</div>;
-
-  if (data) console.log(data);
+  const { balance, address, price } = fetchPriceAndBalance();
 
   return (
     <div>
-      <div>address: {data.data.address}</div>
-      <div>balance: {data.data.balance}</div>
+      <div>address: {address}</div>
+      <div>balance: {balance}</div>
+      <div>price: {price}</div>
     </div>
   );
 };
