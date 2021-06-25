@@ -1,16 +1,17 @@
 // @ts-nocheck
 
 import React from 'react';
-import { fetchPriceAndBalance } from 'api/oracle';
+import { usePriceAndBalance } from 'hooks/usePriceAndBalance';
 
 const DisplayHNT = () => {
-  const { balance, address, price } = fetchPriceAndBalance();
+  const { normalizedBalance, address, price, value } = usePriceAndBalance();
 
   return (
     <div>
       <div>address: {address}</div>
-      <div>balance: {balance}</div>
-      <div>price: {price}</div>
+      <div>balance: {normalizedBalance}</div>
+      <div>current price: {price}</div>
+      <div>value: {value}</div>
     </div>
   );
 };
