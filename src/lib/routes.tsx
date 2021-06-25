@@ -1,19 +1,21 @@
-import React, { Suspense } from 'react';
-import { Route, MemoryRouter, Switch } from 'react-router-dom';
+import React, { Suspense, useState } from 'react';
+import { Route, MemoryRouter, Redirect, Switch } from 'react-router-dom';
 import Newtab from 'pages/Newtab/Newtab';
-import { useStored } from 'hooks/useStored'
+import { useStored } from 'hooks/useStored';
 
 const Home = React.lazy(() => import('containers/Home'));
 
 const Routes: React.FC = () => {
-  const loadAccount = useStored();
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useStored().then(setLoggedIn);
 
   return (
     <MemoryRouter>
       <Switch>
         <Route exact path="/">
           <Suspense fallback={<div>Loading...</div>}>
-            { loadAccount ? <Home /> : <Newtab /> }
+            {loggedIn ? <Redirect to="/home" /> : <Newtab />}
           </Suspense>
         </Route>
         <Route exact path="/home">

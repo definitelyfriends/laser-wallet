@@ -9,17 +9,19 @@ export const usePriceAndBalance = () => {
   const address = data?.data?.address;
   const balance = data?.data?.balance;
 
-  const currentPrice = useQuery('currentPrice', currentOraclePrice, { enabled: !!balance });
+  const oracleCurrentPrice = useQuery('currentPrice', currentOraclePrice, { enabled: !!balance });
 
-  const price = currentPrice?.data?.data?.price;
+  const price = oracleCurrentPrice?.data?.data?.price;
   const normalizedBalance = balance / 100000000;
+  const normalizedPrice = centsToDollars(calculateTotal(price));
   const value = centsToDollars(normalizedBalance * calculateTotal(price));
 
   return {
     balance,
     normalizedBalance,
+    normalizedPrice,
     address,
     price,
-    value
+    value,
   };
 };
