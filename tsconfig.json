@@ -21,7 +21,8 @@
       "pages/*": ["./src/pages/*"],
       "hooks/*": ["./src/hooks/*"],
       "src/*": ["./src/*"],
-      "api/*": ["./src/api/*"]
+      "api/*": ["./src/api/*"],
+      "components/*": ["./src/components/*"]
     }
   },
   "include": ["src", "src/types/global.d.ts"],

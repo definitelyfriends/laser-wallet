@@ -1,5 +1,7 @@
 import React, { Suspense, useState } from 'react';
 import styled from 'styled-components';
+import Identicon from 'react-identicons';
+import { H4 } from 'components/Headers';
 import { useAddress } from 'hooks/useAddress';
 import { truncateAddress } from 'lib/utils';
 
@@ -8,6 +10,18 @@ const Top = styled.header`
   background-color: #1f2436;
   color: #ffffff;
   height: 83px;
+  display: flex;
+`;
+
+const Left = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 2em;
+`;
+
+const WalletInfo = styled.div`
+  flex: 1;
+  margin-left: 15px;
 `;
 
 const HomeTop: React.FC = () => {
@@ -18,8 +32,13 @@ const HomeTop: React.FC = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Top>
-        <div>Wallet Name</div>
-        {address}
+        <Left>
+          <Identicon string={address} size={32} />
+          <WalletInfo>
+            <H4>Wallet Name</H4>
+            {address}
+          </WalletInfo>
+        </Left>
       </Top>
     </Suspense>
   );

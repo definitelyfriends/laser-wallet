@@ -18,6 +18,7 @@ const alias = {
   src: path.join(__dirname, 'src'),
   hooks: path.join(__dirname, 'src', 'hooks'),
   api: path.join(__dirname, 'src', 'api'),
+  components: path.join(__dirname, 'src', 'components'),
 };
 
 // load the secrets
