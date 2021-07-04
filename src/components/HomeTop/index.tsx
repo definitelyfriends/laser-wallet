@@ -1,6 +1,7 @@
 import React, { Suspense, useState } from 'react';
 import styled from 'styled-components';
 import Identicon from 'react-identicons';
+import { FiMenu } from 'react-icons/fi';
 import { H4 } from 'components/Headers';
 import { useAddress } from 'hooks/useAddress';
 import { truncateAddress } from 'lib/utils';
@@ -17,6 +18,14 @@ const Left = styled.div`
   display: flex;
   align-items: center;
   margin-left: 2em;
+`;
+
+const Right = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 2em;
+  flex: 1;
+  justify-content: flex-end;
 `;
 
 const WalletInfo = styled.div`
@@ -39,6 +48,9 @@ const HomeTop: React.FC = () => {
             {address}
           </WalletInfo>
         </Left>
+        <Right>
+          <FiMenu size="24px" />
+        </Right>
       </Top>
     </Suspense>
   );
