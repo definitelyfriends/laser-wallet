@@ -17,6 +17,13 @@ This was built using [Chrome Extension Boilerplate with React 17 and Webpack 5](
    4. Select the `build` folder.
 6. Happy hacking.
 
+## Contributing
+
+Anyone of any experience level is welcome to come help. Just follow these guidelines:
+
+1. Be kind.
+2. If there's something you'd like to help with, create a new issue and let's talk!
+
 ## Structure
 
 The boilerplate is already prepared to have a popup, an options page, a background page, and a new tab page (which replaces the new tab page of your browser).
