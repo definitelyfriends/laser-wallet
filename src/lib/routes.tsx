@@ -5,7 +5,7 @@ import { useStored } from 'hooks/useStored';
 
 const Home = React.lazy(() => import('containers/Home'));
 
-const Routes: React.FC = () => {
+const Routes: React.FC = (props: any) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useStored().then(setLoggedIn);

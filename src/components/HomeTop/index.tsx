@@ -8,7 +8,7 @@ import { truncateAddress } from 'lib/utils';
 
 const Top = styled.header`
   width: 100%;
-  background-color: #1f2436;
+  background-color: #272b4a;
   color: #ffffff;
   height: 83px;
   display: flex;
