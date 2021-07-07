@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery, useInfiniteQuery } from 'react-query';
 import { fetchItem } from 'lib/store';
 
 const baseUrl = 'https://api.helium.io/v1';
@@ -6,21 +6,27 @@ const accounts = `${baseUrl}/accounts`;
 
 enum Endpoint {
   HOTSPOTS = 'hotspots',
-  OUIS = 'OUIS',
-  ACTIVITY = 'ACTIVITY',
-  ACTIVITY_COUNT = 'ACTIVITY_COUNT',
-  ELECTIONS = 'ELECTIONS',
-  CHALLENGES = 'CHALLENGES',
-  PENDING_TXNS = 'PENDING_TXNS',
-  REWARDS = 'REWARDS',
-  REWARD_TOTALS = 'REWARD_TOTALS',
-  STATS = 'STATS',
+  OUIS = 'ouis',
+  ACTIVITY = 'activity',
+  ACTIVITY_COUNT = 'activity_count',
+  ELECTIONS = 'elections',
+  CHALLENGES = 'challenges',
+  PENDING_TXNS = 'pending_txns',
+  REWARDS = 'rewards',
+  REWARD_TOTALS = 'reward_totals',
+  STATS = 'stats',
   NONE = '',
 }
 
-export const fetchAccountBase = async (type?: Endpoint) => {
+export const fetchAccountBase = async (type?: Endpoint, cursor?: string) => {
   const address = await fetchItem('address');
-  const accountUrl = `${accounts}/${address}/${type}`;
+  // const address = '13HPSdf8Ng8E2uKpLm8Ba3sQ6wdNimTcaKXYmMkHyTUUeUELPwJ';
+  let accountUrl = `${accounts}/${address}/${type}`;
+
+  if (cursor) {
+    accountUrl = `${accountUrl}?cursor=${cursor}`;
+  }
+
   const response = await fetch(accountUrl);
 
   if (!response.ok) {
@@ -30,46 +36,52 @@ export const fetchAccountBase = async (type?: Endpoint) => {
   return response.json();
 };
 
-export const fetchAccount = () => {
+export const useFetchAccount = () => {
   return useQuery('account', () => fetchAccountBase(Endpoint.NONE));
 };
 
-export const fetchAccountHotspots = () => {
+export const useFetchAccountHotspots = () => {
   return useQuery('accountHotspots', () => fetchAccountBase(Endpoint.HOTSPOTS));
 };
 
-export const fetchAccountOuis = () => {
+export const useFetchAccountOuis = () => {
   return useQuery('accountOUIs', () => fetchAccountBase(Endpoint.OUIS));
 };
 
-export const fetchAccountActivity = () => {
-  return useQuery('accountActivity', () => fetchAccountBase(Endpoint.ACTIVITY));
+export const useFetchAccountActivity = () => {
+  return useInfiniteQuery(
+    'accountActivity',
+    ({ pageParam }) => fetchAccountBase(Endpoint.ACTIVITY, pageParam),
+    {
+      getNextPageParam: (lastPage, pages) => lastPage.cursor,
+    }
+  );
 };
 
-export const fetchAccountActivityCount = () => {
+export const useFetchAccountActivityCount = () => {
   return useQuery('accountActivityCount', () => fetchAccountBase(Endpoint.ACTIVITY_COUNT));
 };
 
-export const fetchAccountElections = () => {
+export const useFetchAccountElections = () => {
   return useQuery('accountElections', () => fetchAccountBase(Endpoint.ELECTIONS));
 };
 
-export const fetchAccountChallenges = () => {
+export const useFetchAccountChallenges = () => {
   return useQuery('accountChallenges', () => fetchAccountBase(Endpoint.CHALLENGES));
 };
 
-export const fetchAccountPendingTxns = () => {
+export const useFetchAccountPendingTxns = () => {
   return useQuery('accountPendingTxns', () => fetchAccountBase(Endpoint.PENDING_TXNS));
 };
 
-export const fetchAccountRewards = () => {
+export const useFetchAccountRewards = () => {
   return useQuery('accountRewards', () => fetchAccountBase(Endpoint.REWARDS));
 };
 
-export const fetchAccountRewardTotals = () => {
+export const useFetchAccountRewardTotals = () => {
   return useQuery('accountRewardTotals', () => fetchAccountBase(Endpoint.REWARD_TOTALS));
 };
 
-export const fetchAccountStats = () => {
+export const useFetchAccountStats = () => {
   return useQuery('accountStats', () => fetchAccountBase(Endpoint.STATS));
 };

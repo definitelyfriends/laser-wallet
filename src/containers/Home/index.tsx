@@ -1,8 +1,6 @@
 import React, { Suspense } from 'react';
-import DisplayHNT from 'components/DisplayHNT';
 import HomeTop from 'components/HomeTop';
-import HorizontalMenu from 'components/HorizontalMenu';
-import pathState from 'src/state/pathState';
+import pathState, { PathStateEnum } from 'src/state/pathState';
 import { useRecoilValue } from 'recoil';
 
 const Assets = React.lazy(() => import('components/Assets'));
@@ -12,13 +10,13 @@ const Hotspots = React.lazy(() => import('components/Hotspots'));
 const Home: React.FC = () => {
   const path = useRecoilValue(pathState);
 
+  console.log(path);
+
   return (
     <div>
       <HomeTop />
-      <HorizontalMenu />
-      <DisplayHNT />
       <Suspense fallback={<div>loading...</div>}>
-        {path === 'assets' && <Assets />}
+        {(path === 'assets' || path === PathStateEnum.root) && <Assets />}
         {path === 'history' && <History />}
         {path === 'hotspots' && <Hotspots />}
       </Suspense>

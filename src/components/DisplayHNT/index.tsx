@@ -23,8 +23,8 @@ const DisplayHNT = () => {
 
   return (
     <Container>
-      <Value>{normalizedPrice} USD</Value>
-      <Balance>{normalizedBalance} HNT</Balance>
+      <Value>{normalizedBalance} HNT</Value>
+      <Balance>{normalizedPrice} USD</Balance>
     </Container>
   );
 };

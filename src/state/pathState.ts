@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 export enum PathStateEnum {
   assets = 'assets',
-  root = '/',
+  root = '',
   hotspots = 'hotspots',
   history = 'history',
 }

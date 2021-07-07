@@ -1,10 +1,19 @@
 import { useQuery } from 'react-query';
-import { fetchAccount } from 'api/accounts';
+import { useFetchAccount } from 'api/accounts';
 import { currentOraclePrice } from 'api/oracle';
 import { calculateTotal, centsToDollars } from 'lib/money';
 
-export const usePriceAndBalance = () => {
-  const { data } = fetchAccount();
+interface Balances {
+  balance: string;
+  normalizedBalance: number;
+  normalizedPrice: string;
+  address: string;
+  price: string;
+  value: string;
+}
+
+export const usePriceAndBalance = (): Balances => {
+  const { data } = useFetchAccount();
 
   const address = data?.data?.address;
   const balance = data?.data?.balance;
