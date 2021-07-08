@@ -12,13 +12,11 @@ const Assets: React.FC = () => {
   return (
     <div>
       <DisplayHNT />
-      {data?.pages.map((pages, i) => (
-        <React.Fragment key={i}>
-          {pages.data.map((activity: any) => (
-            <PaymentType activity={activity} />
-          ))}
-        </React.Fragment>
-      ))}
+      <ul>
+        {data?.pages.map((pages, i) =>
+          pages.data.map((activity: any) => <PaymentType activity={activity} />)
+        )}
+      </ul>
       {hasNextPage && <button onClick={() => fetchNextPage()}>get more</button>}
     </div>
   );
