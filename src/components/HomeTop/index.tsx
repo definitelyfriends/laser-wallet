@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import styled, { css } from 'styled-components';
 import { FiMenu } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
+import { MidDark } from 'components/Colors';
 import pathState, { PathStateEnum } from 'src/state/pathState';
 import addressState from 'src/state/addressState';
 import { H4 } from 'components/Headers';
@@ -10,7 +11,7 @@ import { truncateAddress } from 'lib/utils';
 
 const Top = styled.header`
   width: 100%;
-  background-color: #272b4a;
+  background-color: #1f2436;
   color: #ffffff;
   height: 83px;
   display: flex;
@@ -48,6 +49,12 @@ const Right = styled.div<ContainerProps>`
     `}
 `;
 
+const Bubble = styled.div<ContainerProps>`
+  background-color: ${props => (props.active ? '#916aff' : MidDark)};
+  padding: 15px;
+  border-radius: 7px;
+`;
+
 const HomeTop: React.FC = () => {
   const [address, setAddress] = useRecoilState<string>(addressState);
   const [path, setPath] = useRecoilState(pathState);
@@ -65,18 +72,19 @@ const HomeTop: React.FC = () => {
           onClick={() => updateRoute(PathStateEnum.assets)}
           active={path === PathStateEnum.assets}
         >
-          <div>
+          <Bubble active={path === PathStateEnum.assets || path === PathStateEnum.root}>
             <H4>My Wallet</H4>
             {truncateAddress(address)}
-          </div>
+          </Bubble>
         </Left>
         <Left
           onClick={() => updateRoute(PathStateEnum.hotspots)}
           active={path === PathStateEnum.hotspots}
         >
-          <div>
-            <H4>HotSpots</H4># units
-          </div>
+          <Bubble active={path === PathStateEnum.hotspots}>
+            <H4>HotSpots</H4>
+            Coming Soon
+          </Bubble>
         </Left>
         <Right>
           <FiMenu size="24px" />

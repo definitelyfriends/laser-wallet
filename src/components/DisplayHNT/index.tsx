@@ -4,7 +4,7 @@ import { H1 } from 'components/Headers';
 import { usePriceAndBalance } from 'hooks/usePriceAndBalance';
 
 const Container = styled.div`
-  background-color: #272b4a;
+  background-color: #1f2436;
   color: #ffffff;
   padding: 2em;
 `;
@@ -19,7 +19,7 @@ const Balance = styled.div`
 `;
 
 const DisplayHNT = () => {
-  const { normalizedBalance, address, normalizedPrice, value } = usePriceAndBalance();
+  const { normalizedBalance, normalizedPrice } = usePriceAndBalance();
 
   return (
     <Container>

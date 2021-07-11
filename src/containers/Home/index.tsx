@@ -10,17 +10,15 @@ const Hotspots = React.lazy(() => import('components/Hotspots'));
 const Home: React.FC = () => {
   const path = useRecoilValue(pathState);
 
-  console.log(path);
-
   return (
-    <div>
+    <>
       <HomeTop />
       <Suspense fallback={<div>loading...</div>}>
         {(path === 'assets' || path === PathStateEnum.root) && <Assets />}
         {path === 'history' && <History />}
         {path === 'hotspots' && <Hotspots />}
       </Suspense>
-    </div>
+    </>
   );
 };
 
