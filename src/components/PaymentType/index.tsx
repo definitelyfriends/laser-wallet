@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
+import { MidDark } from 'components/Colors';
 import addressState from 'src/state/addressState';
 
 interface Props {
@@ -21,9 +22,10 @@ const Circle = styled.div`
 const ListItem = styled.li`
   display: flex;
   height: 80px;
-  width: 100%;
   align-items: center;
-  border-bottom: 1px solid #e4e3ff;
+  background-color: ${MidDark};
+  border-radius: 7px;
+  margin: 0.5em 2em;
 `;
 
 const Left = styled.div`

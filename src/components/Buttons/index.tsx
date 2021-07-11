@@ -8,16 +8,22 @@ const handleColor = (color: string): string => {
     case 'middark':
       return MidDark;
     default:
-      return '';
+      return MidDark;
   }
 };
 
 export const Button = styled.button<{ color: string }>`
-  min-width: 200px;
+  min-width: 150px;
+  min-height: 45px;
   border: none;
   font-size: 0.875em;
   padding: 7px 10px;
+  border: 1px solid Purple;
   background-color: ${({ color }) => handleColor(color)};
+  border-radius: 4px;
+  color: white;
+  width: 100%;
+  cursor: pointer;
 
   &:focus {
     outline: 0;
