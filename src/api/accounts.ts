@@ -8,7 +8,7 @@ enum Endpoint {
   HOTSPOTS = 'hotspots',
   OUIS = 'ouis',
   ACTIVITY = 'activity',
-  ACTIVITY_COUNT = 'activity_count',
+  ACTIVITY_COUNT = 'activity/count',
   ELECTIONS = 'elections',
   CHALLENGES = 'challenges',
   PENDING_TXNS = 'pending_txns',

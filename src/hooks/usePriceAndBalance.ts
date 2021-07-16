@@ -10,6 +10,8 @@ interface Balances {
   address: string;
   price: string;
   value: string;
+  absoluteBalance: number;
+  balanceDecimalToPrecision: string;
 }
 
 export const usePriceAndBalance = (): Balances => {
@@ -25,6 +27,10 @@ export const usePriceAndBalance = (): Balances => {
   const normalizedPrice = centsToDollars(calculateTotal(price));
   const value = centsToDollars(normalizedBalance * calculateTotal(price));
 
+  const absoluteBalance = Math.floor(Number(normalizedBalance));
+  const balanceDecimal = Number(normalizedBalance) % 1;
+  const balanceDecimalToPrecision = balanceDecimal.toPrecision(7);
+
   return {
     balance,
     normalizedBalance,
@@ -32,5 +38,7 @@ export const usePriceAndBalance = (): Balances => {
     address,
     price,
     value,
+    absoluteBalance,
+    balanceDecimalToPrecision,
   };
 };

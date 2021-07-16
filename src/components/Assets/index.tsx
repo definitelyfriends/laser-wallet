@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import DisplayHNT from 'components/DisplayHNT';
 import { Button } from 'components/Buttons';
-import { useFetchAccountActivity } from 'api/accounts';
+import { useFetchAccountActivity, useFetchAccountActivityCount } from 'api/accounts';
 import PaymentType from 'components/PaymentType';
 
 const Container = styled.div`
@@ -15,9 +15,20 @@ const Container = styled.div`
   }
 `;
 
+const Bottom = styled.div``;
+
 const Assets: React.FC = () => {
   const { data, fetchNextPage, hasNextPage } = useFetchAccountActivity();
+  const count = useFetchAccountActivityCount();
+
+  const sumAllActivity = (activities: any) => {
+    if (!activities.data) return;
+
+    return Object.values(activities?.data?.data).reduce((a: any, b: any) => a + b, 0);
+  };
+
   const numPages = data?.pages?.length || 0;
+  const totalActivity = sumAllActivity(count);
 
   if (hasNextPage && numPages < 6) fetchNextPage();
 
@@ -33,7 +44,14 @@ const Assets: React.FC = () => {
           pages.data.map((activity: any) => <PaymentType activity={activity} />)
         )}
       </ul>
-      {hasNextPage && <button onClick={() => fetchNextPage()}>get more</button>}
+      <Bottom>
+        {totalActivity}
+        {hasNextPage && (
+          <Button color="purple" onClick={() => fetchNextPage()}>
+            Load More
+          </Button>
+        )}
+      </Bottom>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { H1 } from 'components/Headers';
+import { MidGray } from 'components/Colors';
 import { usePriceAndBalance } from 'hooks/usePriceAndBalance';
 
 const Container = styled.div`
@@ -9,22 +10,41 @@ const Container = styled.div`
   padding: 2em;
 `;
 
-const Value = styled(H1)`
+const HNTContainer = styled.div`
+  display: flex;
+`;
+
+const Decimal = styled.div`
+  margin-left: 0.575em;
+  font-size: 12px;
+  color: ${MidGray};
+  align-self: center;
+`;
+
+const Balance = styled(H1)`
   font-weight: 400;
 `;
 
-const Balance = styled.div`
+const Value = styled.div`
   color: #767991;
   font-size: 13px;
 `;
 
 const DisplayHNT = () => {
-  const { normalizedBalance, normalizedPrice } = usePriceAndBalance();
+  const { absoluteBalance, balanceDecimalToPrecision, value } = usePriceAndBalance();
+
+  const decimalWithoutPrefix = balanceDecimalToPrecision.split('.')[1];
 
   return (
     <Container>
-      <Value>{normalizedBalance} HNT</Value>
-      <Balance>{normalizedPrice} USD</Balance>
+      <HNTContainer>
+        <Balance>{absoluteBalance}</Balance>
+        <Decimal>
+          <div>HNT</div>
+          <div>.{decimalWithoutPrefix}</div>
+        </Decimal>
+      </HNTContainer>
+      <Value>{value} USD</Value>
     </Container>
   );
 };

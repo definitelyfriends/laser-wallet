@@ -21,38 +21,49 @@ interface ContainerProps {
   active?: boolean;
 }
 
-const Left = styled.div<ContainerProps>`
+const Left = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 2em;
   cursor: pointer;
-
-  ${props =>
-    props.active &&
-    css`
-      border-bottom: 1px solid white;
-    `}
+  width: 100%;
 `;
 
-const Right = styled.div<ContainerProps>`
+const Right = styled.div`
   display: flex;
   align-items: center;
   margin-right: 2em;
-  flex: 1;
   justify-content: flex-end;
   cursor: pointer;
-
-  ${props =>
-    props.active &&
-    css`
-      border-bottom: 1px solid white;
-    `}
 `;
 
 const Bubble = styled.div<ContainerProps>`
   background-color: ${props => (props.active ? '#916aff' : MidDark)};
   padding: 15px;
   border-radius: 7px;
+  width: 100%;
+`;
+
+const Menu = styled.div`
+  background-color: ${MidDark};
+  padding: 15px;
+  border-radius: 7px;
+  margin-left: 0.875em;
+`;
+
+const Something = styled.div`
+  justify-content: stretch;
+  display: flex;
+  flex: 1;
+  padding-left: 2em;
+  width: 100%;
+
+  div ~ div {
+    margin-left: 1em;
+  }
+`;
+
+const Subtext = styled.div`
+  font-size: 12px;
 `;
 
 const HomeTop: React.FC = () => {
@@ -68,26 +79,24 @@ const HomeTop: React.FC = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Top>
-        <Left
-          onClick={() => updateRoute(PathStateEnum.assets)}
-          active={path === PathStateEnum.assets}
-        >
-          <Bubble active={path === PathStateEnum.assets || path === PathStateEnum.root}>
-            <H4>My Wallet</H4>
-            {truncateAddress(address)}
-          </Bubble>
-        </Left>
-        <Left
-          onClick={() => updateRoute(PathStateEnum.hotspots)}
-          active={path === PathStateEnum.hotspots}
-        >
-          <Bubble active={path === PathStateEnum.hotspots}>
-            <H4>HotSpots</H4>
-            Coming Soon
-          </Bubble>
-        </Left>
+        <Something>
+          <Left onClick={() => updateRoute(PathStateEnum.assets)}>
+            <Bubble active={path === PathStateEnum.assets || path === PathStateEnum.root}>
+              <H4>My Wallet</H4>
+              <Subtext>{truncateAddress(address)}</Subtext>
+            </Bubble>
+          </Left>
+          <Left onClick={() => updateRoute(PathStateEnum.hotspots)}>
+            <Bubble active={path === PathStateEnum.hotspots}>
+              <H4>HotSpots</H4>
+              <Subtext>Coming Soon</Subtext>
+            </Bubble>
+          </Left>
+        </Something>
         <Right>
-          <FiMenu size="24px" />
+          <Menu>
+            <FiMenu size="24px" />
+          </Menu>
         </Right>
       </Top>
     </Suspense>
