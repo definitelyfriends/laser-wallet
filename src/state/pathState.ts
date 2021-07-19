@@ -5,6 +5,7 @@ export enum PathStateEnum {
   root = '',
   hotspots = 'hotspots',
   history = 'history',
+  settings = 'settings',
 }
 
 export default atom<PathStateEnum>({ key: 'path', default: PathStateEnum.root });

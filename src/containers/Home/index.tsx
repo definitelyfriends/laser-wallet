@@ -6,17 +6,23 @@ import { useRecoilValue } from 'recoil';
 const Assets = React.lazy(() => import('components/Assets'));
 const History = React.lazy(() => import('components/History'));
 const Hotspots = React.lazy(() => import('components/Hotspots'));
+const Settings = React.lazy(() => import('containers/Settings'));
 
 const Home: React.FC = () => {
   const path = useRecoilValue(pathState);
 
   return (
     <>
-      <HomeTop />
       <Suspense fallback={<div>loading...</div>}>
-        {(path === 'assets' || path === PathStateEnum.root) && <Assets />}
+        {(path === 'assets' || path === PathStateEnum.root) && (
+          <>
+            <HomeTop />
+            <Assets />
+          </>
+        )}
         {path === 'history' && <History />}
         {path === 'hotspots' && <Hotspots />}
+        {path === 'settings' && <Settings />}
       </Suspense>
     </>
   );

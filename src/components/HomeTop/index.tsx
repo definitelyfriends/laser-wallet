@@ -95,7 +95,7 @@ const HomeTop: React.FC = () => {
           </Left>
         </Something>
         <Right>
-          <Menu>
+          <Menu onClick={() => updateRoute(PathStateEnum.settings)}>
             <FiMenu size="24px" />
           </Menu>
         </Right>
