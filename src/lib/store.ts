@@ -7,3 +7,5 @@ export const storeItem = async (key: any, value: any) => {
 export const fetchItem = async (key: any): Promise<string | null> => {
   return await localForage.getItem(key);
 };
+
+export const clearItems = async () => await localForage.clear();

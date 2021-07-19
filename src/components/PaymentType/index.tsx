@@ -5,16 +5,13 @@ import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import { MidDark } from 'components/Colors';
 import addressState from 'src/state/addressState';
+import * as SVG from 'components/svgs';
 
 interface Props {
   activity: any;
 }
 
-const Circle = styled.div`
-  width: 32px;
-  height: 32px;
-  border-radius: 100px;
-  background-color: ${props => props.color};
+const Icon = styled.div`
   margin-left: 2em;
   margin-right: 1em;
 `;
@@ -73,7 +70,9 @@ const PaymentType: React.FC<Props> = props => {
     return (
       <ListItem>
         <Left>
-          <Circle color="blue" />
+          <Icon>
+            <SVG.Logout />
+          </Icon>
           <div>Sent HNT</div>
         </Left>
         <Right>
@@ -88,7 +87,9 @@ const PaymentType: React.FC<Props> = props => {
     return (
       <ListItem>
         <Left>
-          <Circle color="green" />
+          <Icon>
+            <SVG.Login />
+          </Icon>
           <div>
             <div>Received HNT</div>
             <div>Confirmed</div>
