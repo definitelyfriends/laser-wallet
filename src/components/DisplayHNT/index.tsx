@@ -28,6 +28,7 @@ const Balance = styled(H1)`
 const Value = styled.div`
   color: #767991;
   font-size: 13px;
+  margin-top: 10px;
 `;
 
 const DisplayHNT = () => {

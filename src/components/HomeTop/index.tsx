@@ -58,12 +58,13 @@ const Something = styled.div`
   width: 100%;
 
   div ~ div {
-    margin-left: 1em;
+    margin-left: 0.775em;
   }
 `;
 
 const Subtext = styled.div`
   font-size: 12px;
+  margin-top: 5px;
 `;
 
 const HomeTop: React.FC = () => {

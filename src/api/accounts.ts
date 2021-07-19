@@ -13,14 +13,18 @@ enum Endpoint {
   CHALLENGES = 'challenges',
   PENDING_TXNS = 'pending_txns',
   REWARDS = 'rewards',
-  REWARD_TOTALS = 'reward_totals',
+  REWARD_TOTALS = 'rewards/sum',
   STATS = 'stats',
   NONE = '',
 }
 
+/**
+ * Note: Test address with tons of transactions
+ * 13HPSdf8Ng8E2uKpLm8Ba3sQ6wdNimTcaKXYmMkHyTUUeUELPwJ
+ */
+
 export const fetchAccountBase = async (type?: Endpoint, cursor?: string) => {
   const address = await fetchItem('address');
-  // const address = '13HPSdf8Ng8E2uKpLm8Ba3sQ6wdNimTcaKXYmMkHyTUUeUELPwJ';
   let accountUrl = `${accounts}/${address}/${type}`;
 
   if (cursor) {

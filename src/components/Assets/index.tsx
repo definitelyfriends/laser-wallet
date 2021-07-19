@@ -15,22 +15,35 @@ const Container = styled.div`
   }
 `;
 
-const Bottom = styled.div``;
+const Bottom = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 25px 2em 0 2em;
+`;
+
+const sum = (a: any, b: any) => a + b;
+
+const sumTotalActivity = (activities: any) => {
+  if (!activities.data) return;
+
+  return Object.values(activities?.data?.data).reduce(sum, 0);
+};
+
+const sumDisplayedActivity = (data: any) => {
+  return data?.map((p: any) => p.data.length).reduce(sum, 0);
+};
 
 const Assets: React.FC = () => {
   const { data, fetchNextPage, hasNextPage } = useFetchAccountActivity();
   const count = useFetchAccountActivityCount();
 
-  const sumAllActivity = (activities: any) => {
-    if (!activities.data) return;
-
-    return Object.values(activities?.data?.data).reduce((a: any, b: any) => a + b, 0);
-  };
-
   const numPages = data?.pages?.length || 0;
-  const totalActivity = sumAllActivity(count);
+  const totalActivity = sumTotalActivity(count);
 
   if (hasNextPage && numPages < 6) fetchNextPage();
+
+  const currentTotal = sumDisplayedActivity(data?.pages);
 
   return (
     <div>
@@ -40,17 +53,17 @@ const Assets: React.FC = () => {
         <Button color="purple">Send</Button>
       </Container>
       <ul>
-        {data?.pages.map((pages, i) =>
-          pages.data.map((activity: any) => <PaymentType activity={activity} />)
+        {data?.pages.map((page, i) =>
+          page.data.map((activity: any) => <PaymentType activity={activity} />)
         )}
       </ul>
       <Bottom>
-        {totalActivity}
         {hasNextPage && (
-          <Button color="purple" onClick={() => fetchNextPage()}>
+          <Button color="purple" onClick={() => fetchNextPage()} style={{ width: '200px' }}>
             Load More
           </Button>
         )}
+        {currentTotal} of {totalActivity}
       </Bottom>
     </div>
   );
