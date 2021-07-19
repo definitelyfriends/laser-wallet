@@ -1,7 +1,8 @@
 import { atom } from 'recoil';
 
 export enum PathStateEnum {
-  root = '',
+  empty = '',
+  root = 'root',
   import = 'import',
   password = 'password',
   assets = 'assets',
@@ -11,4 +12,4 @@ export enum PathStateEnum {
   signin = 'signin',
 }
 
-export default atom<PathStateEnum>({ key: 'path', default: PathStateEnum.root });
+export default atom<PathStateEnum>({ key: 'path', default: PathStateEnum.empty });
