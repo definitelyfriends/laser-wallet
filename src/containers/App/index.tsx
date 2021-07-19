@@ -2,7 +2,8 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
-import Routes from 'lib/routes';
+import Home from 'containers/Home';
+import './global.css';
 
 const queryClient = new QueryClient();
 
@@ -10,7 +11,7 @@ const App: React.FC = () => {
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <Routes />
+        <Home />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </RecoilRoot>

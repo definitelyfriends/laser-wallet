@@ -1,5 +1,28 @@
 import React from 'react';
 
+export const Logo = () => {
+  return (
+    <svg width="64" height="66" viewBox="0 0 64 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <mask
+        id="mask0"
+        mask-type="alpha"
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="64"
+        height="66"
+      >
+        <rect width="64" height="66" fill="#C4C4C4" />
+      </mask>
+      <g mask="url(#mask0)">
+        <path d="M34 0V24L75 -2.5" stroke="#916AFF" stroke-width="8" />
+        <path d="M19 0V46L91.5 26.5" stroke="#916AFF" stroke-width="8" />
+        <path d="M4 0V61.5H64" stroke="#916AFF" stroke-width="8" />
+      </g>
+    </svg>
+  );
+};
+
 export const PlusSquare = () => {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

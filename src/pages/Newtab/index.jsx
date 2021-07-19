@@ -1,6 +1,6 @@
 import { render } from 'react-dom';
 import App from 'containers/App';
-import './index.css';
+import './index.scss';
 
 render(<App />, window.document.querySelector('#app-container'));
 

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { FiMenu } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
 import { MidDark } from 'components/Colors';
