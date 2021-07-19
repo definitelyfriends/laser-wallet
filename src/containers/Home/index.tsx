@@ -22,7 +22,7 @@ const Home: React.FC = () => {
     <>
       <Suspense fallback={<div>loading...</div>}>
         {path === PathStateEnum.root && <Splash />}
-        {path === PathStateEnum.import && <ImportSeed />}
+        {(path === PathStateEnum.import || path === PathStateEnum.password) && <ImportSeed />}
         {path === PathStateEnum.signin && <SignIn />}
         {(path === PathStateEnum.assets || loggedIn) && (
           <>

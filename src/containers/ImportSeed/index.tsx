@@ -7,6 +7,7 @@ import { TextArea } from 'src/components/Common';
 import { useRecoilState } from 'recoil';
 import pathState, { PathStateEnum } from 'src/state/pathState';
 import { Button } from 'src/components/Buttons';
+import { Purple } from 'components/Colors';
 
 const Container = styled.main`
   padding: 2em;
@@ -48,8 +49,17 @@ const Bottom = styled.div`
   margin-top: 10px;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  button:first-child {
+    margin-right: 20px;
+  }
+`;
+
 const ImportSeed: React.FC = () => {
-  const [, setPath] = useRecoilState(pathState);
+  const [path, setPath] = useRecoilState(pathState);
 
   const { checked, setChecked } = useBooleanCheckboxes();
   const [seedPhrase, setSeedPhrase] = useState('');
@@ -65,79 +75,110 @@ const ImportSeed: React.FC = () => {
     }
   };
 
+  const validatePassphrase = seedPhrase !== '';
   const verifyPasswordsMatch =
     passwordConfirm === password && password !== '' && passwordConfirm !== '';
 
   return (
     <Container>
-      <BoldH2>Import Wallet</BoldH2>
-      <InputContainer>
-        <Label>Wallet Key Phrase</Label>
-        <Subtitle>
-          Type or paste your wallet key phrase below. Leave a space between each word.
-        </Subtitle>
-        {checked ? (
-          <TextArea onChange={e => setSeedPhrase(e.target.value)} defaultValue={seedPhrase} />
-        ) : (
-          <FakeTextArea
-            aria-invalid="false"
-            type="password"
-            dir="auto"
-            onChange={e => setSeedPhrase(e.target.value)}
-            defaultValue={seedPhrase}
-          />
-        )}
-      </InputContainer>
-      <InputContainer>
-        <Label>Password</Label>
-        <Subtitle>
-          Enter a password to unlock this Laser Wallet only. We recommend it be different than any
-          other password you have.
-        </Subtitle>
-        <PasswordInput
-          aria-invalid="false"
-          type="password"
-          dir="auto"
-          onChange={e => setPassword(e.target.value)}
-        />
-      </InputContainer>
-      <InputContainer>
-        <Label>Confirm Password</Label>
-        <PasswordInput
-          aria-invalid="false"
-          type="password"
-          dir="auto"
-          onChange={e => setPasswordConfirm(e.target.value)}
-        />
-      </InputContainer>
-      <InputContainer>
-        <Label>Name your account</Label>
-        <Subtitle>
-          Before you start, you can name your default Wallet account. This is optional, but might
-          help you keep track of what the account is for.
-        </Subtitle>
-        <PasswordInput
-          aria-invalid="false"
-          type="name"
-          dir="auto"
-          onChange={e => setWalletName(e.target.value)}
-        />
-      </InputContainer>
-      <Button onClick={importAccount} disabled={!verifyPasswordsMatch} color="purple">
-        Submit
-      </Button>
-      <Bottom>
-        <input
-          type="checkbox"
-          id="vehicle1"
-          name="seed-phrase"
-          checked={checked}
-          onChange={e => {
-            setChecked(e.target.checked);
-          }}
-        />
-        <label htmlFor="seed-phrase">Show seed phrase</label>
-      </Bottom>
+      {path === PathStateEnum.import && (
+        <>
+          <BoldH2>Enter key phrase</BoldH2>
+          <Subtitle>
+            Type or paste your wallet key phrase below. Leave a space between each word.
+          </Subtitle>
+          <InputContainer>
+            <Label>Wallet Key Phrase</Label>
+            {checked ? (
+              <TextArea onChange={e => setSeedPhrase(e.target.value)} defaultValue={seedPhrase} />
+            ) : (
+              <FakeTextArea
+                aria-invalid="false"
+                type="password"
+                dir="auto"
+                onChange={e => setSeedPhrase(e.target.value)}
+                defaultValue={seedPhrase}
+              />
+            )}
+          </InputContainer>
+          <ButtonContainer>
+            <Button
+              color="middark"
+              style={{ color: Purple }}
+              onClick={() => setPath(PathStateEnum.root)}
+            >
+              Back
+            </Button>
+            <Button
+              color="purple"
+              onClick={() => setPath(PathStateEnum.password)}
+              disabled={!validatePassphrase}
+            >
+              Import
+            </Button>
+          </ButtonContainer>
+          <Bottom>
+            <input
+              type="checkbox"
+              id="vehicle1"
+              name="seed-phrase"
+              checked={checked}
+              onChange={e => {
+                setChecked(e.target.checked);
+              }}
+            />
+            <label htmlFor="seed-phrase">Show seed phrase</label>
+          </Bottom>
+        </>
+      )}
+      {path === PathStateEnum.password && (
+        <>
+          <BoldH2>Create Account</BoldH2>
+          <InputContainer>
+            <Label>Name your account</Label>
+            <PasswordInput
+              aria-invalid="false"
+              type="text"
+              dir="auto"
+              onChange={e => setWalletName(e.target.value)}
+            />
+          </InputContainer>
+          <InputContainer>
+            <Label>Password</Label>
+            <Subtitle>
+              Enter a password to unlock this Laser Wallet only. We recommend it be different than
+              any other password you have.
+            </Subtitle>
+            <PasswordInput
+              aria-invalid="false"
+              type="password"
+              dir="auto"
+              onChange={e => setPassword(e.target.value)}
+            />
+          </InputContainer>
+          <InputContainer>
+            <Label>Confirm Password</Label>
+            <PasswordInput
+              aria-invalid="false"
+              type="password"
+              dir="auto"
+              onChange={e => setPasswordConfirm(e.target.value)}
+            />
+          </InputContainer>
+          <ButtonContainer>
+            <Button
+              color="middark"
+              style={{ color: Purple }}
+              onClick={() => setPath(PathStateEnum.import)}
+            >
+              Back
+            </Button>
+            <Button onClick={importAccount} disabled={!verifyPasswordsMatch} color="purple">
+              Submit
+            </Button>
+          </ButtonContainer>
+        </>
+      )}
     </Container>
   );
 };

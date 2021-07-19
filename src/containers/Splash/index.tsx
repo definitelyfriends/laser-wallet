@@ -11,7 +11,7 @@ const Main = styled.main`
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
   color: ${Purple};
   text-align: center;
 `;

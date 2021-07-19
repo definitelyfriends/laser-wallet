@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 import Home from 'containers/Home';
-import './global.css';
 
 const queryClient = new QueryClient();
 
