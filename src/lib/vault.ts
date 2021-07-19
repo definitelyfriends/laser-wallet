@@ -2,23 +2,32 @@ import { Keypair } from '@helium/crypto';
 import CryptoES from 'crypto-es';
 import localForage from 'localforage';
 import { storeItem } from 'src/lib/store';
+import { nameGenerator } from 'src/lib/nameGenerator';
 import { convertToArray, toBase64 } from './vault.utils';
 
 interface Vault {
   password: string;
   seedPhrase: string;
+  walletName?: string;
 }
 
-export const createVault = async ({ password, seedPhrase }: Vault): Promise<boolean> => {
+export const createVault = async ({
+  password,
+  seedPhrase,
+  walletName,
+}: Vault): Promise<boolean> => {
   const keypair = await Keypair.fromWords(convertToArray(seedPhrase));
 
   const privateKey = toBase64(keypair.privateKey);
   const publicKey = toBase64(keypair.publicKey);
   const address = keypair.address.b58;
+  const name = walletName || nameGenerator();
 
+  // TODO: Conver this data structure into an array of objects to handle multiple wallets
   await storeItem('privateKey', encrypt(privateKey, password));
   await storeItem('publicKey', encrypt(publicKey, password));
   await storeItem('address', address);
+  await storeItem('walletName', name);
 
   return true;
 };
