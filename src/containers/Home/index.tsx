@@ -10,6 +10,7 @@ const History = React.lazy(() => import('components/History'));
 const Settings = React.lazy(() => import('containers/Settings'));
 const ImportSeed = React.lazy(() => import('containers/ImportSeed'));
 const SignIn = React.lazy(() => import('containers/SignIn'));
+const Receive = React.lazy(() => import('containers/Receive'));
 
 const Home: React.FC = () => {
   const path = useRecoilValue(pathState);
@@ -23,14 +24,15 @@ const Home: React.FC = () => {
         {path === PathStateEnum.root && <Splash />}
         {(path === PathStateEnum.import || path === PathStateEnum.password) && <ImportSeed />}
         {path === PathStateEnum.signin && <SignIn />}
+        {path === PathStateEnum.receive && <Receive />}
+        {path === PathStateEnum.history && <History />}
+        {path === PathStateEnum.settings && <Settings />}
         {(path === PathStateEnum.assets || loggedIn) && (
           <>
             <HomeTop />
             <Assets />
           </>
         )}
-        {path === PathStateEnum.history && <History />}
-        {path === PathStateEnum.settings && <Settings />}
       </Suspense>
     </>
   );

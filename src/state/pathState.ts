@@ -9,6 +9,7 @@ export enum PathStateEnum {
   history = 'history',
   settings = 'settings',
   signin = 'signin',
+  receive = 'receive',
 }
 
 export default atom<PathStateEnum>({ key: 'path', default: PathStateEnum.empty });

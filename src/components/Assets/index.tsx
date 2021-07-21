@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import pathState, { PathStateEnum } from 'src/state/pathState';
 import DisplayHNT from 'components/DisplayHNT';
 import { Button } from 'components/Buttons';
 import { useFetchAccountActivity, useFetchAccountActivityCount } from 'api/accounts';
@@ -35,6 +37,8 @@ const sumDisplayedActivity = (data: any) => {
 };
 
 const Assets: React.FC = () => {
+  const [, setPath] = useRecoilState(pathState);
+
   const { data, fetchNextPage, hasNextPage } = useFetchAccountActivity();
   const count = useFetchAccountActivityCount();
 
@@ -49,7 +53,9 @@ const Assets: React.FC = () => {
     <div>
       <DisplayHNT />
       <Container>
-        <Button color="middark">Receive</Button>
+        <Button color="middark" onClick={() => setPath(PathStateEnum.receive)}>
+          Receive
+        </Button>
         <Button color="purple">Send</Button>
       </Container>
       <ul>
