@@ -7,7 +7,6 @@ import { useStored } from 'hooks/useStored';
 const Splash = React.lazy(() => import('containers/Splash'));
 const Assets = React.lazy(() => import('components/Assets'));
 const History = React.lazy(() => import('components/History'));
-const Hotspots = React.lazy(() => import('components/Hotspots'));
 const Settings = React.lazy(() => import('containers/Settings'));
 const ImportSeed = React.lazy(() => import('containers/ImportSeed'));
 const SignIn = React.lazy(() => import('containers/SignIn'));
@@ -31,7 +30,6 @@ const Home: React.FC = () => {
           </>
         )}
         {path === PathStateEnum.history && <History />}
-        {path === PathStateEnum.hotspots && <Hotspots />}
         {path === PathStateEnum.settings && <Settings />}
       </Suspense>
     </>

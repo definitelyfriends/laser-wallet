@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import styled from 'styled-components';
-import { FiMenu } from 'react-icons/fi';
+import { FiMenu, FiExternalLink, FiChevronDown } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
 import { MidDark } from 'components/Colors';
 import pathState, { PathStateEnum } from 'src/state/pathState';
@@ -8,6 +8,7 @@ import addressState from 'src/state/addressState';
 import { H4 } from 'components/Headers';
 import { useAddress } from 'hooks/useAddress';
 import { truncateAddress } from 'lib/utils';
+import { useState } from 'react';
 
 const Top = styled.header`
   width: 100%;
@@ -15,6 +16,7 @@ const Top = styled.header`
   color: #ffffff;
   height: 83px;
   display: flex;
+  padding-left: 2em;
 `;
 
 interface ContainerProps {
@@ -38,9 +40,14 @@ const Right = styled.div`
 
 const Bubble = styled.div<ContainerProps>`
   background-color: ${props => (props.active ? '#916aff' : MidDark)};
-  padding: 15px;
+  padding: 11px;
   border-radius: 7px;
   width: 100%;
+  display: flex;
+
+  div:first-child {
+    flex: 1;
+  }
 `;
 
 const Menu = styled.div`
@@ -50,26 +57,25 @@ const Menu = styled.div`
   margin-left: 0.875em;
 `;
 
-const Something = styled.div`
-  justify-content: stretch;
-  display: flex;
-  flex: 1;
-  padding-left: 2em;
-  width: 100%;
-
-  div ~ div {
-    margin-left: 0.775em;
-  }
-`;
-
 const Subtext = styled.div`
   font-size: 12px;
   margin-top: 5px;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+`;
+
+const Chevron = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const HomeTop: React.FC = () => {
   const [address, setAddress] = useRecoilState<string>(addressState);
-  const [path, setPath] = useRecoilState(pathState);
+  const [, setPath] = useRecoilState(pathState);
+  const [toggleWalletDropdown, setToggleWalletDropdown] = useState(false);
 
   const updateRoute = (path: string) => setPath(path as PathStateEnum);
 
@@ -80,20 +86,26 @@ const HomeTop: React.FC = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Top>
-        <Something>
-          <Left onClick={() => updateRoute(PathStateEnum.assets)}>
-            <Bubble active={path === PathStateEnum.assets || path === PathStateEnum.root}>
+        <Left>
+          <Bubble>
+            <div>
               <H4>My Wallet</H4>
-              <Subtext>{truncateAddress(address)}</Subtext>
-            </Bubble>
-          </Left>
-          <Left onClick={() => updateRoute(PathStateEnum.hotspots)}>
-            <Bubble active={path === PathStateEnum.hotspots}>
-              <H4>HotSpots</H4>
-              <Subtext>Coming Soon</Subtext>
-            </Bubble>
-          </Left>
-        </Something>
+              <Subtext>
+                <a
+                  href={`https://explorer.helium.com/accounts/${address}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {truncateAddress(address)} <FiExternalLink size="12px" />
+                </a>
+              </Subtext>
+            </div>
+            <Chevron>
+              <FiChevronDown size="24px" />
+            </Chevron>
+          </Bubble>
+        </Left>
+
         <Right>
           <Menu onClick={() => updateRoute(PathStateEnum.settings)}>
             <FiMenu size="24px" />

@@ -39,13 +39,13 @@ const DisplayHNT = () => {
   return (
     <Container>
       <HNTContainer>
-        <Balance>{absoluteBalance}</Balance>
+        <Balance>{absoluteBalance || '0'}</Balance>
         <Decimal>
           <div>HNT</div>
-          <div>.{decimalWithoutPrefix}</div>
+          <div>.{decimalWithoutPrefix || '00'}</div>
         </Decimal>
       </HNTContainer>
-      <Value>{value} USD</Value>
+      <Value>{value || '0.00'} USD</Value>
     </Container>
   );
 };

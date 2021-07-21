@@ -6,7 +6,6 @@ export enum PathStateEnum {
   import = 'import',
   password = 'password',
   assets = 'assets',
-  hotspots = 'hotspots',
   history = 'history',
   settings = 'settings',
   signin = 'signin',
