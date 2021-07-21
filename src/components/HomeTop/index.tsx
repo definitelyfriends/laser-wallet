@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 import styled from 'styled-components';
-import { FiMenu, FiExternalLink, FiChevronDown } from 'react-icons/fi';
+import { FiMenu, FiPlus, FiExternalLink, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
-import { MidDark } from 'components/Colors';
+import { MidDark, DarkPurple } from 'components/Colors';
 import pathState, { PathStateEnum } from 'src/state/pathState';
 import addressState from 'src/state/addressState';
 import { H4 } from 'components/Headers';
@@ -28,6 +28,7 @@ const Left = styled.div`
   align-items: center;
   cursor: pointer;
   width: 100%;
+  position: relative;
 `;
 
 const Right = styled.div`
@@ -44,6 +45,7 @@ const Bubble = styled.div<ContainerProps>`
   border-radius: 7px;
   width: 100%;
   display: flex;
+  margin-top: 3px;
 
   div:first-child {
     flex: 1;
@@ -72,6 +74,26 @@ const Chevron = styled.div`
   align-items: center;
 `;
 
+const PlusIcon = styled(FiPlus)``;
+
+const WalletDropdown = styled.div`
+  background-color: ${DarkPurple};
+  padding: 11px;
+  border-radius: 7px;
+  width: 100%;
+  display: flex;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  height: 48px;
+  align-items: center;
+  flex: 1;
+
+  div:first-child {
+    flex: 1;
+  }
+`;
+
 const HomeTop: React.FC = () => {
   const [address, setAddress] = useRecoilState<string>(addressState);
   const [, setPath] = useRecoilState(pathState);
@@ -87,7 +109,10 @@ const HomeTop: React.FC = () => {
     <Suspense fallback={<div>Loading...</div>}>
       <Top>
         <Left>
-          <Bubble>
+          <Bubble
+            onClick={() => setToggleWalletDropdown(!toggleWalletDropdown)}
+            active={toggleWalletDropdown}
+          >
             <div>
               <H4>My Wallet</H4>
               <Subtext>
@@ -101,11 +126,15 @@ const HomeTop: React.FC = () => {
               </Subtext>
             </div>
             <Chevron>
-              <FiChevronDown size="24px" />
+              {toggleWalletDropdown ? <FiChevronUp size="24px" /> : <FiChevronDown size="24px" />}
             </Chevron>
           </Bubble>
+          {toggleWalletDropdown && (
+            <WalletDropdown>
+              <div>Add another wallet</div> <PlusIcon />
+            </WalletDropdown>
+          )}
         </Left>
-
         <Right>
           <Menu onClick={() => updateRoute(PathStateEnum.settings)}>
             <FiMenu size="24px" />
