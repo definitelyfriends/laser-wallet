@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import styled from 'styled-components';
 import { FiMenu, FiPlus, FiExternalLink, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
@@ -8,7 +8,7 @@ import addressState from 'src/state/addressState';
 import { H4 } from 'components/Headers';
 import { useAddress } from 'hooks/useAddress';
 import { truncateAddress } from 'lib/utils';
-import { useState } from 'react';
+import { fetchItem } from 'lib/store';
 
 const Top = styled.header`
   width: 100%;
@@ -98,11 +98,22 @@ const HomeTop: React.FC = () => {
   const [address, setAddress] = useRecoilState<string>(addressState);
   const [, setPath] = useRecoilState(pathState);
   const [toggleWalletDropdown, setToggleWalletDropdown] = useState(false);
+  const [name, setName] = useState(null);
 
   const updateRoute = (path: string) => setPath(path as PathStateEnum);
 
   useAddress().then(walletAddress => {
-    setAddress(walletAddress as string);
+    setAddress(walletAddress as any);
+  });
+
+  fetchItem('vaults').then(vts => {
+    const current = vts.find(item => item['address'] === address);
+    /* @ts-ignore */
+    const name = current?.walletName;
+
+    if (name) {
+      setName(name);
+    }
   });
 
   return (
@@ -114,7 +125,7 @@ const HomeTop: React.FC = () => {
             active={toggleWalletDropdown}
           >
             <div>
-              <H4>My Wallet</H4>
+              <H4>{name || 'My Wallet'}</H4>
               <Subtext>
                 <a
                   href={`https://explorer.helium.com/accounts/${address}`}

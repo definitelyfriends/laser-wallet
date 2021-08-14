@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil';
 import pathState, { PathStateEnum } from 'src/state/pathState';
 import { Button } from 'src/components/Buttons';
 import { Purple } from 'components/Colors';
+import { storeItem } from 'lib/store';
 
 const Container = styled.main`
   padding: 2em;
@@ -68,9 +69,10 @@ const ImportSeed: React.FC = () => {
   const [walletName, setWalletName] = useState('');
 
   const importAccount = async () => {
-    const created = await createVault({ seedPhrase, password, walletName });
+    const created: string = await createVault({ seedPhrase, password, walletName });
 
     if (created) {
+      storeItem('address', created);
       setPath(PathStateEnum.assets);
     }
   };

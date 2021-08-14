@@ -60,7 +60,7 @@ const Assets: React.FC = () => {
       </Container>
       <ul>
         {data?.pages.map((page, i) =>
-          page.data.map((activity: any) => <PaymentType activity={activity} />)
+          page?.data?.map((activity: any) => <PaymentType activity={activity} />)
         )}
       </ul>
       <Bottom>

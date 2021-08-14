@@ -7317,6 +7317,11 @@ tsutils@^3.17.1, tsutils@^3.21.0:
   dependencies:
     tslib "^1.8.1"
 
+tsx-control-statements@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/tsx-control-statements/-/tsx-control-statements-4.1.1.tgz#2d5b36a8180357f91d079d47a977e4c030ddb32d"
+  integrity sha512-l1BndCi1teH+uz4Ebx9lCnjWlg91wrA1R26lRYgdh8d+dXoyNrSJpnc0zxCcasFPJ8hGHmZ2MOZ6Z+/g/47NKw==
+
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.4.0.tgz#07b8203bfa7056c0657050e3ccd2c37730bab8f1"

@@ -12,4 +12,4 @@ export enum PathStateEnum {
   receive = 'receive',
 }
 
-export default atom<PathStateEnum>({ key: 'path', default: PathStateEnum.empty });
+export default atom<PathStateEnum>({ key: 'path', default: PathStateEnum.root });

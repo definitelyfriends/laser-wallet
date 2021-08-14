@@ -8,3 +8,4 @@ declare global {
 declare module 'react-identicons';
 
 window.Buffer = Buffer;
+window.localforage = localforage;
