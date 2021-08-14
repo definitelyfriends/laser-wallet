@@ -4,7 +4,6 @@ import { FiMenu, FiPlus, FiExternalLink, FiChevronDown, FiChevronUp } from 'reac
 import { useRecoilState } from 'recoil';
 import { MidDark, DarkPurple } from 'components/Colors';
 import pathState, { PathStateEnum } from 'src/state/pathState';
-import addressState from 'src/state/addressState';
 import { H4 } from 'components/Headers';
 import { useAddress } from 'hooks/useAddress';
 import { truncateAddress } from 'lib/utils';
@@ -95,19 +94,20 @@ const WalletDropdown = styled.div`
 `;
 
 const HomeTop: React.FC = () => {
-  const [address, setAddress] = useRecoilState<string>(addressState);
   const [, setPath] = useRecoilState(pathState);
+
   const [toggleWalletDropdown, setToggleWalletDropdown] = useState(false);
   const [name, setName] = useState(null);
+  const [currentAddress, setCurrentAddress] = useState<string>('');
 
   const updateRoute = (path: string) => setPath(path as PathStateEnum);
 
   useAddress().then(walletAddress => {
-    setAddress(walletAddress as any);
+    setCurrentAddress(walletAddress as any);
   });
 
   fetchItem('vaults').then(vts => {
-    const current = vts.find(item => item['address'] === address);
+    const current = vts.find(item => item['address'] === currentAddress);
     /* @ts-ignore */
     const name = current?.walletName;
 
@@ -128,11 +128,11 @@ const HomeTop: React.FC = () => {
               <H4>{name || 'My Wallet'}</H4>
               <Subtext>
                 <a
-                  href={`https://explorer.helium.com/accounts/${address}`}
+                  href={`https://explorer.helium.com/accounts/${currentAddress}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {truncateAddress(address)} <FiExternalLink size="12px" />
+                  {truncateAddress(currentAddress)} <FiExternalLink size="12px" />
                 </a>
               </Subtext>
             </div>
@@ -141,7 +141,7 @@ const HomeTop: React.FC = () => {
             </Chevron>
           </Bubble>
           {toggleWalletDropdown && (
-            <WalletDropdown>
+            <WalletDropdown onClick={() => updateRoute(PathStateEnum.import)}>
               <div>Add another wallet</div> <PlusIcon />
             </WalletDropdown>
           )}
