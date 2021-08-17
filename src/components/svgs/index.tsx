@@ -1,8 +1,19 @@
 import React from 'react';
 
-export const Logo = () => {
+interface LogoProps {
+  width?: string | number;
+  height?: string | number;
+}
+
+export const Logo = ({ width = 20, height = 20 }: LogoProps) => {
   return (
-    <svg width="64" height="66" viewBox="0 0 64 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 64 66"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <mask
         id="mask0"
         mask-type="alpha"

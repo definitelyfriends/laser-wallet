@@ -39,7 +39,7 @@ const Splash = () => {
 
   return (
     <Main>
-      <Logo />
+      <Logo width="66" height="68" />
       <div>
         <Header>Laser</Header>
         <div>Helium Wallet</div>

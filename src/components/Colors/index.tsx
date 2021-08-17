@@ -3,3 +3,4 @@ export const MidDark = '#272B4A';
 export const DarkPurple = '#383B61';
 export const Purple = '#916AFF';
 export const MidGray = '#CDD4E2';
+export const Gray = '#767991';
