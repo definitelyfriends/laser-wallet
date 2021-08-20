@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FiMenu, FiPlus, FiExternalLink, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
@@ -102,18 +102,20 @@ const HomeTop: React.FC = () => {
 
   const updateRoute = (path: string) => setPath(path as PathStateEnum);
 
+  useEffect(() => {
+    fetchItem('vaults').then(vts => {
+      const current = vts.find(item => item['address'] === currentAddress);
+      /* @ts-ignore */
+      const name = current?.walletName;
+
+      if (name) {
+        setName(name);
+      }
+    });
+  }, [name, currentAddress]);
+
   useAddress().then(walletAddress => {
     setCurrentAddress(walletAddress as any);
-  });
-
-  fetchItem('vaults').then(vts => {
-    const current = vts.find(item => item['address'] === currentAddress);
-    /* @ts-ignore */
-    const name = current?.walletName;
-
-    if (name) {
-      setName(name);
-    }
   });
 
   return (

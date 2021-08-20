@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
@@ -70,16 +70,18 @@ const Receive: React.FC = () => {
   const [currentAddress, setCurrentAddress] = useState('');
   const [name, setName] = useState(null);
 
-  fetchItem('address').then(address => setCurrentAddress(address as any));
-  fetchItem('vaults').then(vts => {
-    const current = vts.find(item => item['address'] === currentAddress);
-    /* @ts-ignore */
-    const name = current?.walletName;
+  useEffect(() => {
+    fetchItem('address').then(address => setCurrentAddress(address as any));
+    fetchItem('vaults').then(vts => {
+      const current = vts.find(item => item['address'] === currentAddress);
+      /* @ts-ignore */
+      const name = current?.walletName;
 
-    if (name) {
-      setName(name);
-    }
-  });
+      if (name) {
+        setName(name);
+      }
+    });
+  }, [name, currentAddress]);
 
   return (
     <>

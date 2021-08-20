@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-// import localForage from 'localforage';
 import { FiExternalLink, FiCheck } from 'react-icons/fi';
 import { Purple } from 'components/Colors';
 import { Button } from 'components/Buttons';
@@ -81,16 +80,13 @@ const Settings = () => {
   const [accounts, setAccounts] = useState<[] | Account[]>([]);
   const [, setPath] = useRecoilState(pathState);
 
-  // const logout = () => {
-  //   localForage.removeItem('address');
-  //   setPath(PathStateEnum.root);
-  // };
+  useEffect(() => {
+    fetchItem('vaults').then(accountList => setAccounts(accountList));
+    fetchItem('address').then(address => setCurrentAddress(address as any));
+  }, [currentAddress, accounts]);
 
   const addWallet = () => setPath(PathStateEnum.import);
   const switchWallet = (address: string) => storeItem('address', address);
-
-  fetchItem('vaults').then(accountList => setAccounts(accountList));
-  fetchItem('address').then(address => setCurrentAddress(address as any));
 
   return (
     <div>
