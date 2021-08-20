@@ -1,7 +1,8 @@
-import { fetchItem } from 'lib/store'
+import { fetchItem } from 'lib/store';
+import { isEmpty } from 'ramda';
 
 export const useStored = async () => {
-  const address = await fetchItem('address')
+  const address = await fetchItem('address');
 
-  return !!address;
-}
+  return !isEmpty(address);
+};
