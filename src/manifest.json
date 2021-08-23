@@ -1,11 +1,14 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "version": "0.0.0.1",
   "description": "Laser Wallet is a wallet for Helium (HNT tokens).",
   "name": "Laser Wallet - A Helium Wallet",
-  "options_page": "options.html",
-  "background": { "service_worker": "background.bundle.js" },
-  "action": {
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": { "scripts": ["background.bundle.js"], "persistent": true },
+  "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
   },
@@ -21,10 +24,5 @@
   ],
   "permissions": ["tabs"],
   "devtools_page": "devtools.html",
-  "web_accessible_resources": [
-    {
-      "resources": ["content.styles.css", "icon-128.png", "icon-34.png"],
-      "matches": []
-    }
-  ]
+  "web_accessible_resources": ["content.styles.css", "icon-128.png", "icon-34.png"]
 }
