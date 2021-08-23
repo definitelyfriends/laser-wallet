@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import { MidDark } from 'components/Colors';
-import addressState from 'src/state/addressState';
+import { useAddress } from 'hooks/useAddress';
 import * as SVG from 'components/svgs';
 
 interface Props {
@@ -62,11 +61,16 @@ const humanizeTimestamp = (time: number): string => {
 };
 
 const PaymentType: React.FC<Props> = props => {
-  const address = useRecoilValue(addressState);
+  const [currentAddress, setCurrentAddress] = useState<string>('');
   const { payer, time, payee, amount } = normalizePaymentVersions(props.activity);
+
+  useAddress().then(walletAddress => {
+    setCurrentAddress(walletAddress as any);
+  });
+
   const normalizedHNT = amount / 100000000;
 
-  if (payer === address) {
+  if (payer === currentAddress) {
     return (
       <ListItem>
         <Left>
@@ -83,7 +87,7 @@ const PaymentType: React.FC<Props> = props => {
     );
   }
 
-  if (payee === address) {
+  if (payee === currentAddress) {
     return (
       <ListItem>
         <Left>
