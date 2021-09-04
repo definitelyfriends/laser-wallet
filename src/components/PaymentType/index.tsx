@@ -12,7 +12,7 @@ interface Props {
 
 const Icon = styled.div`
   margin-left: 2em;
-  margin-right: 1em;
+  margin-right: 0.25em;
 `;
 
 const ListItem = styled.li`
@@ -43,10 +43,18 @@ const Sent = styled.div`
 `;
 
 const normalizePaymentVersions = (activity: any) => {
+  /**
+   * activity rewards hash
+   * activity?.rewards?.[n]
+   *  account: "14XYfzLU3fjouCzxokLwkfF2uHBzgxZjfAHMGtQ4c5DcJ3T5RCZ"
+      amount: 762492
+      gateway: "11aNnyQz3Rk5qCtKcGartwogr5PqrthfypZWDNqoPQKnFPxWZXS"
+      type: "poc_challengers" | "poc_witnesses"
+   */
   return {
     ...activity,
-    payee: activity.payee || activity.payments[0].payee,
-    amount: activity.amount || activity.payments[0].amount,
+    payee: activity?.payee || activity?.payments?.[0].payee,
+    amount: activity?.amount || activity?.payments?.[0].amount,
   };
 };
 
@@ -62,13 +70,29 @@ const humanizeTimestamp = (time: number): string => {
 
 const PaymentType: React.FC<Props> = props => {
   const [currentAddress, setCurrentAddress] = useState<string>('');
-  const { payer, time, payee, amount } = normalizePaymentVersions(props.activity);
+  const { payer, time, payee, amount, rewards } = normalizePaymentVersions(props.activity);
 
   useAddress().then(walletAddress => {
     setCurrentAddress(walletAddress as any);
   });
 
   const normalizedHNT = amount / 100000000;
+
+  const rewardType = (type: string): string => {
+    if (type === 'poc_challengees') {
+      return 'Challengee';
+    }
+
+    if (type === 'poc_challengers') {
+      return 'Challenger';
+    }
+
+    if (type === 'poc_witnesses') {
+      return 'Witness';
+    }
+
+    return 'Mined';
+  };
 
   if (payer === currentAddress) {
     return (
@@ -105,6 +129,27 @@ const PaymentType: React.FC<Props> = props => {
         </Right>
       </ListItem>
     );
+  }
+
+  if (rewards) {
+    return rewards.map((reward: any) => {
+      return (
+        <ListItem>
+          <Left>
+            <Icon>
+              <SVG.Login />
+            </Icon>
+            <div>
+              <div>{rewardType(reward.type)}</div>
+            </div>
+          </Left>
+          <Right>
+            <Sent>{reward.amount / 100000000} HNT</Sent>
+            <div>{humanizeTimestamp(time)}</div>
+          </Right>
+        </ListItem>
+      );
+    });
   }
 
   return null;

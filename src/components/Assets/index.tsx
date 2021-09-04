@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
+import Loader from 'react-loader-spinner';
 import pathState, { PathStateEnum } from 'src/state/pathState';
 import DisplayHNT from 'components/DisplayHNT';
 import { Button } from 'components/Buttons';
@@ -24,6 +25,12 @@ const Bottom = styled.div`
   margin: 25px 2em 0 2em;
 `;
 
+const CenteredSpinner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const sum = (a: any, b: any) => a + b;
 
 const sumTotalActivity = (activities: any) => {
@@ -39,13 +46,13 @@ const sumDisplayedActivity = (data: any) => {
 const Assets: React.FC = () => {
   const [, setPath] = useRecoilState(pathState);
 
-  const { data, fetchNextPage, hasNextPage } = useFetchAccountActivity();
+  const { data, fetchNextPage, hasNextPage, isFetching, isLoading } = useFetchAccountActivity();
   const count = useFetchAccountActivityCount();
 
   const numPages = data?.pages?.length || 0;
   const totalActivity = sumTotalActivity(count);
 
-  if (hasNextPage && numPages < 6) fetchNextPage();
+  if (hasNextPage && numPages < 1) fetchNextPage();
 
   const currentTotal = sumDisplayedActivity(data?.pages);
 
@@ -63,6 +70,11 @@ const Assets: React.FC = () => {
           page?.data?.map((activity: any) => <PaymentType activity={activity} />)
         )}
       </ul>
+      <CenteredSpinner>
+        {(isFetching || isLoading) && (
+          <Loader type="ThreeDots" width={35} height={35} color="#00BFFF" />
+        )}
+      </CenteredSpinner>
       <Bottom>
         {hasNextPage && (
           <Button color="purple" onClick={() => fetchNextPage()} style={{ width: '200px' }}>

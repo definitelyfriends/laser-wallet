@@ -2,6 +2,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
+// import { useIdleTimer } from 'react-idle-timer';
 import Home from 'containers/Home';
 
 const queryClient = new QueryClient();

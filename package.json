@@ -37,6 +37,8 @@
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.13.0",
     "react-icons": "^4.2.0",
+    "react-idle-timer": "^4.6.4",
+    "react-loader-spinner": "^4.0.0",
     "react-qr-code": "^2.0.0",
     "react-query": "^3.16.0",
     "recoil": "^0.3.1",
