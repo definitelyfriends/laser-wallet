@@ -9,6 +9,7 @@ import pathState, { PathStateEnum } from 'src/state/pathState';
 const Container = styled.div`
   padding: 2em;
   display: flex;
+  align-items: center;
 `;
 
 const Text = styled.div`
@@ -28,7 +29,7 @@ const Text = styled.div`
   div {
     color: ${Gray};
     font-size: 0.875em;
-    line-height: 18px;
+    line-height: 17px;
   }
 `;
 

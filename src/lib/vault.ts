@@ -1,17 +1,18 @@
+// @ts-ignore
 import { Keypair } from '@helium/crypto';
 import CryptoES from 'crypto-es';
-import localForage from 'localforage';
 import { storeItem, fetchItem } from 'src/lib/store';
 import { convertToArray, toBase64 } from './vault.utils';
+import JsonFormatter from './cryptoJsonFormatter';
 
-interface Vault {
-  password: string;
+interface CreateVault {
   seedPhrase: string;
   walletName?: string;
 }
 
-export const createVault = async ({ password, seedPhrase, walletName }: Vault): Promise<string> => {
+export const createVault = async ({ seedPhrase, walletName }: CreateVault): Promise<string> => {
   const existingVaults = await fetchItem('vaults');
+  const salt = await fetchItem('salt');
   const keypair = await Keypair.fromWords(convertToArray(seedPhrase));
 
   const privateKey = toBase64(keypair.privateKey);
@@ -19,8 +20,8 @@ export const createVault = async ({ password, seedPhrase, walletName }: Vault): 
   const address = keypair.address.b58;
 
   const account = {
-    privateKey: encrypt(privateKey, password),
-    publicKey: encrypt(publicKey, password),
+    privateKey: encryptKeys(privateKey, salt),
+    publicKey: encryptKeys(publicKey, salt),
     address,
     walletName,
   };
@@ -30,13 +31,40 @@ export const createVault = async ({ password, seedPhrase, walletName }: Vault): 
   return address;
 };
 
-export const encrypt = (phrase: string, password: string): string => {
-  return CryptoES.AES.encrypt(JSON.stringify(phrase), password).toString();
+export const createAccount = async (password: string) => {
+  try {
+    const salt = CryptoES.lib.WordArray.random(128 / 8).toString();
+    await storeItem('salt', salt);
+
+    const enc = CryptoES.AES.encrypt(password, salt, { format: JsonFormatter });
+    await storeItem('enc', enc.toString());
+
+    return true;
+  } catch (e) {
+    return new Error('Could not create account.');
+  }
 };
 
-export const decrypt = async (password: string): Promise<string> => {
-  const stored: any = await localForage.getItem('privateKey');
-  const decrypted = CryptoES.AES.decrypt(stored, password);
+// TODO: Not in use...yet
+// const decryptAccount = async (password: string) => {
+//   const salt = await fetchItem('salt');
+//   const enc = await fetchItem('enc');
 
-  return decrypted.toString(CryptoES.enc.Utf8);
+//   /* @ts-ignore */
+//   const decrypted = CryptoES.AES.decrypt(enc, salt, { format: JsonFormatter }).toString(
+//     CryptoES.enc.Utf8
+//   );
+
+//   return decrypted === password;
+// };
+
+// TODO: also not in use
+// const decryptKey = async (key: string) => {
+//   const salt = await fetchItem('salt');
+
+//   return CryptoES.AES.decrypt(key, salt).toString(CryptoES.enc.Utf8);
+// }
+
+export const encryptKeys = (phrase: string, salt: string): string => {
+  return CryptoES.AES.encrypt(JSON.stringify(phrase), salt).toString();
 };

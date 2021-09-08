@@ -104,8 +104,8 @@ const HomeTop: React.FC = () => {
 
   useEffect(() => {
     fetchItem('vaults').then(vts => {
-      const current = vts.find(item => item['address'] === currentAddress);
-      /* @ts-ignore */
+      const current = vts.find((item: StoredVault) => item['address'] === currentAddress);
+
       const name = current?.walletName;
 
       if (name) {

@@ -39,6 +39,8 @@ const ListItem = styled.li<ListItemProps>`
 
   a {
     font-size: 14px;
+    color: white;
+    text-decoration: none;
   }
 `;
 

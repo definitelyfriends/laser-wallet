@@ -9,3 +9,10 @@ declare module 'react-identicons';
 
 window.Buffer = Buffer;
 window.localforage = localforage;
+
+interface StoredVault {
+  address: string;
+  privateKey: string;
+  publicKey: string;
+  walletName: string;
+}

@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 import { Logo } from 'components/svgs';
 import { Button } from 'src/components/Buttons';
 import { Purple } from 'src/components/Colors';
 import pathState, { PathStateEnum } from 'src/state/pathState';
-import { useRecoilState } from 'recoil';
+import { useVaultLookup } from 'hooks/useVaultLookup';
 
 const Main = styled.main`
   justify-content: space-evenly;
@@ -34,8 +35,9 @@ const ButtonContainer = styled.div`
 
 const Splash = () => {
   const [, setPath] = useRecoilState(pathState);
+  const vaults = useVaultLookup();
 
-  const updateRoute = (path: string) => setPath(path as PathStateEnum);
+  const vaultsExist = vaults?.length !== 0;
 
   return (
     <Main>
@@ -45,10 +47,16 @@ const Splash = () => {
         <div>Helium Wallet</div>
       </div>
       <ButtonContainer>
-        <Button color="purple" onClick={() => updateRoute(PathStateEnum.import)}>
-          Import wallet
-        </Button>
-        <Button color="middark" onClick={() => updateRoute(PathStateEnum.signin)}>
+        {vaultsExist ? (
+          <Button color="purple" onClick={() => setPath(PathStateEnum.import)}>
+            Import account
+          </Button>
+        ) : (
+          <Button color="purple" onClick={() => setPath(PathStateEnum.password)}>
+            Create Wallet
+          </Button>
+        )}
+        <Button color="middark" onClick={() => setPath(PathStateEnum.signin)}>
           Sign in
         </Button>
       </ButtonContainer>

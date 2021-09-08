@@ -1,32 +1,59 @@
 import React, { Suspense, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
+import { useIdleTimer } from 'react-idle-timer';
 import pathState, { PathStateEnum } from 'src/state/pathState';
 import HomeTop from 'components/HomeTop';
 import { useStored } from 'hooks/useStored';
 import localforage from 'localforage';
+import CryptoES from 'crypto-es';
+import { clearCurrentAccount } from 'lib/store';
 
 declare global {
   interface Window {
     Buffer: any;
     localforage: any;
+    CryptoES: any;
   }
 }
 
+// TODO: remove
 window.localforage = localforage;
+window.CryptoES = CryptoES;
 
 const Splash = React.lazy(() => import('containers/Splash'));
 const Assets = React.lazy(() => import('components/Assets'));
 const History = React.lazy(() => import('components/History'));
 const Settings = React.lazy(() => import('containers/Settings'));
-const ImportSeed = React.lazy(() => import('containers/ImportSeed'));
+const ImportSeed = React.lazy(() => import('containers/Onboarding/ImportSeed'));
+const Password = React.lazy(() => import('containers/Onboarding/Password'));
 const SignIn = React.lazy(() => import('containers/SignIn'));
 const Receive = React.lazy(() => import('containers/Receive'));
 
+const FIFTEEN_MINUTES = 900000;
+
 const Home = () => {
-  const path = useRecoilValue(pathState);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [path, setPath] = useRecoilState(pathState);
 
   useStored().then(setLoggedIn);
+
+  const handleOnIdle = () => {
+    const popupIsOpen = chrome.extension.getViews({ type: 'popup' }).length !== 0;
+
+    if (popupIsOpen) {
+      console.log(getLastActiveTime);
+    } else {
+      setPath(PathStateEnum.root);
+      clearCurrentAccount();
+    }
+  };
+
+  const { getLastActiveTime } = useIdleTimer({
+    timeout: FIFTEEN_MINUTES,
+    onIdle: handleOnIdle,
+    debounce: 500,
+    startOnMount: true,
+  });
 
   if (path === PathStateEnum.root && !loggedIn) {
     return (
@@ -36,10 +63,18 @@ const Home = () => {
     );
   }
 
-  if (path === PathStateEnum.import || path === PathStateEnum.password) {
+  if (path === PathStateEnum.import) {
     return (
       <Suspense fallback={<div>loading...</div>}>
         <ImportSeed />
+      </Suspense>
+    );
+  }
+
+  if (path === PathStateEnum.password) {
+    return (
+      <Suspense fallback={<div>loading...</div>}>
+        <Password />
       </Suspense>
     );
   }
