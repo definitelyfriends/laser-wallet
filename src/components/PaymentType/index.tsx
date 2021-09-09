@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Icon = styled.div`
-  margin-left: 2em;
+  margin-left: 1em;
   margin-right: 0.25em;
 `;
 
@@ -32,7 +32,7 @@ const Left = styled.div`
 const Right = styled.div`
   display: flex;
   align-items: flex-end;
-  margin-right: 2em;
+  margin-right: 1em;
   flex: 1;
   justify-content: flex-end;
   flex-direction: column;

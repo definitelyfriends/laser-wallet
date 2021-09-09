@@ -41,7 +41,9 @@ export const fetchAccountBase = async (type?: Endpoint, cursor?: string) => {
 };
 
 export const useFetchAccount = () => {
-  return useQuery('account', () => fetchAccountBase(Endpoint.NONE));
+  return useQuery('account', () => fetchAccountBase(Endpoint.NONE), {
+    refetchOnWindowFocus: false,
+  });
 };
 
 export const useFetchAccountHotspots = () => {
@@ -58,12 +60,15 @@ export const useFetchAccountActivity = () => {
     ({ pageParam }) => fetchAccountBase(Endpoint.ACTIVITY, pageParam),
     {
       getNextPageParam: (lastPage, pages) => lastPage.cursor,
+      refetchOnWindowFocus: false,
     }
   );
 };
 
 export const useFetchAccountActivityCount = () => {
-  return useQuery('accountActivityCount', () => fetchAccountBase(Endpoint.ACTIVITY_COUNT));
+  return useQuery('accountActivityCount', () => fetchAccountBase(Endpoint.ACTIVITY_COUNT), {
+    refetchOnWindowFocus: false,
+  });
 };
 
 export const useFetchAccountElections = () => {
