@@ -8,7 +8,6 @@ export enum PathStateEnum {
   assets = 'assets',
   history = 'history',
   settings = 'settings',
-  signin = 'signin',
   receive = 'receive',
 }
 

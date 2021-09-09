@@ -26,7 +26,6 @@ const History = React.lazy(() => import('components/History'));
 const Settings = React.lazy(() => import('containers/Settings'));
 const ImportSeed = React.lazy(() => import('containers/Onboarding/ImportSeed'));
 const Password = React.lazy(() => import('containers/Onboarding/Password'));
-const SignIn = React.lazy(() => import('containers/SignIn'));
 const Receive = React.lazy(() => import('containers/Receive'));
 
 const FIFTEEN_MINUTES = 900000;
@@ -75,14 +74,6 @@ const Home = () => {
     return (
       <Suspense fallback={<div>loading...</div>}>
         <Password />
-      </Suspense>
-    );
-  }
-
-  if (path === PathStateEnum.signin) {
-    return (
-      <Suspense fallback={<div>loading...</div>}>
-        <SignIn />
       </Suspense>
     );
   }

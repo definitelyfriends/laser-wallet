@@ -45,6 +45,7 @@ const sumDisplayedActivity = (data: any) => {
 
 const Assets: React.FC = () => {
   const [, setPath] = useRecoilState(pathState);
+  // const [transactions, setTransactions] = useRecoilState(transactionState);
 
   const { data, fetchNextPage, hasNextPage, isFetching, isLoading } = useFetchAccountActivity();
   const count = useFetchAccountActivityCount();
@@ -52,9 +53,17 @@ const Assets: React.FC = () => {
   const numPages = data?.pages?.length || 0;
   const totalActivity = sumTotalActivity(count);
 
-  if (hasNextPage && numPages < 1) fetchNextPage();
+  if (hasNextPage && numPages > 2) fetchNextPage();
 
   const currentTotal = sumDisplayedActivity(data?.pages);
+
+  // useEffect(() => {
+  //   data?.pages.forEach(result => {
+  //     if (result.data && result.data.length !== 0) {
+  //       setTransactions(transactions => [...transactions, result.data]);
+  //     }
+  //   });
+  // }, [data, setTransactions, transactions]);
 
   return (
     <div>
