@@ -7,7 +7,7 @@ import { Button } from 'components/Buttons';
 import SettingsHeader from 'components/SettingsHeader';
 import { Dark } from 'components/Colors';
 import pathState, { PathStateEnum } from 'src/state/pathState';
-import { fetchItem, storeItem } from 'lib/store';
+import { fetchItem, storeItem, clearItems } from 'lib/store';
 import { truncateAddress } from 'lib/utils';
 
 interface Account {
@@ -90,6 +90,11 @@ const Settings = () => {
   const addWallet = () => setPath(PathStateEnum.import);
   const switchWallet = (address: string) => storeItem('address', address);
 
+  const clearData = () => {
+    clearItems();
+    setPath(PathStateEnum.root);
+  };
+
   return (
     <div>
       <SettingsHeader />
@@ -127,6 +132,9 @@ const Settings = () => {
       <ButtonContainer>
         <Button onClick={addWallet} color="purple">
           Add another wallet
+        </Button>
+        <Button onClick={clearData} color="purple">
+          Clear all data
         </Button>
       </ButtonContainer>
     </div>

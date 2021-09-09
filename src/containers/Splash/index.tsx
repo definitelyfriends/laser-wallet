@@ -81,6 +81,17 @@ const Splash = () => {
   const vaultsExist = vaults?.length !== 0;
   const errorExists = error.length !== 0;
 
+  const popupIsOpen = chrome.extension.getViews({ type: 'popup' }).length !== 0;
+
+  const openTab = () => {
+    setPath(PathStateEnum.password);
+
+    if (popupIsOpen) {
+      /* @ts-ignore */
+      chrome.extension.sendMessage({ action: 'openTab' });
+    }
+  };
+
   const unlockAccount = async () => {
     const canUnlock = await decryptAccount(password);
 
@@ -127,7 +138,7 @@ const Splash = () => {
         </WideContainer>
       ) : (
         <ButtonContainer>
-          <Button color="purple" onClick={() => setPath(PathStateEnum.password)}>
+          <Button color="purple" onClick={openTab}>
             Create Account
           </Button>
         </ButtonContainer>

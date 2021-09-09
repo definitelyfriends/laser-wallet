@@ -1,17 +1,19 @@
 {
   "manifest_version": 2,
-  "version": "0.0.0.3",
+  "version": "0.0.0.4",
   "description": "An HNT Wallet in your Browser",
   "name": "Laser",
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true
   },
+  "permissions": ["tabs"],
   "background": { "scripts": ["background.bundle.js"], "persistent": true },
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
   },
+  "content_security_policy": "script-src 'self' 'wasm-eval'; object-src 'self'",
   "icons": {
     "128": "icon-128.png"
   },
