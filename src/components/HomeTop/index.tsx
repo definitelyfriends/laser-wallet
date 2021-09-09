@@ -44,7 +44,6 @@ const Bubble = styled.div<ContainerProps>`
   border-radius: 7px;
   width: 100%;
   display: flex;
-  margin-top: 3px;
 
   div:first-child {
     flex: 1;
@@ -53,7 +52,7 @@ const Bubble = styled.div<ContainerProps>`
 
 const Menu = styled.div`
   background-color: ${MidDark};
-  padding: 15px;
+  padding: 17px;
   border-radius: 7px;
   margin-left: 0.875em;
 `;

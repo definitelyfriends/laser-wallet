@@ -45,18 +45,17 @@ export const createAccount = async (password: string) => {
   }
 };
 
-// TODO: Not in use...yet
-// const decryptAccount = async (password: string) => {
-//   const salt = await fetchItem('salt');
-//   const enc = await fetchItem('enc');
+export const decryptAccount = async (password: string) => {
+  const salt = await fetchItem('salt');
+  const enc = await fetchItem('enc');
 
-//   /* @ts-ignore */
-//   const decrypted = CryptoES.AES.decrypt(enc, salt, { format: JsonFormatter }).toString(
-//     CryptoES.enc.Utf8
-//   );
+  /* @ts-ignore */
+  const decrypted = CryptoES.AES.decrypt(enc, salt, { format: JsonFormatter }).toString(
+    CryptoES.enc.Utf8
+  );
 
-//   return decrypted === password;
-// };
+  return decrypted === password;
+};
 
 // TODO: also not in use
 // const decryptKey = async (key: string) => {

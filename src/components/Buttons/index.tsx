@@ -7,13 +7,15 @@ const handleColor = (color: string): string => {
       return Purple;
     case 'middark':
       return MidDark;
+    case 'transparent':
+      return 'transparent';
     default:
       return MidDark;
   }
 };
 
 export const Button = styled.button<{ color: string }>`
-  min-width: 150px;
+  min-width: 120px;
   min-height: 45px;
   border: none;
   font-size: 0.875em;
