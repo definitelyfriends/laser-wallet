@@ -1,5 +1,3 @@
-import { useQuery } from 'react-query';
-
 export const currentOraclePrice = async () => {
   const response = await fetch('https://api.helium.io/v1/oracle/prices/current');
 
