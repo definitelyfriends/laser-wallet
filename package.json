@@ -1,7 +1,7 @@
 {
   "name": "laser-wallet",
   "version": "4.0.1",
-  "description": "A wallet for Helium/HNT",
+  "description": "An HNT wallet in your browser",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -81,7 +81,6 @@
     "sass-loader": "^11.0.1",
     "source-map-loader": "^2.0.1",
     "style-loader": "^2.0.0",
-    "tailwindcss": "^2.1.2",
     "terser-webpack-plugin": "^5.1.1",
     "ts-loader": "^8.0.17",
     "typescript": "^4.1.5",
