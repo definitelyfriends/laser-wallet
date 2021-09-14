@@ -7,7 +7,6 @@
     "page": "options.html",
     "open_in_tab": true
   },
-  "permissions": ["tabs"],
   "background": { "scripts": ["background.bundle.js"], "persistent": true },
   "browser_action": {
     "default_popup": "popup.html",
