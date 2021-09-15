@@ -1,25 +1,21 @@
 import { split, map } from 'ramda';
-
 import * as buffer from 'buffer';
-import { Keypair } from '@helium/crypto';
-(window as any).Buffer = buffer.Buffer;
+import { Keypair, Mnemonic } from '@helium/crypto';
 
 const KEY_TYPE = 'ed25519';
 
-interface KeypairProps {
-  pk: string;
-  secretKey: string;
-}
+const Buffer = buffer.Buffer;
 
 export const lowercase = (word: string) => word.toLowerCase();
 
-export const convertToArray = (seedPhrase: string): string[] => {
-  return map(lowercase, split(' ', seedPhrase));
-};
+export const convertToArray = (seedPhrase: string): string[] =>
+  map(lowercase, split(' ', seedPhrase));
 
 export const toBase64 = (key: Uint8Array): string => Buffer.from(key).toString('base64');
 
 export const toBuffer = (key: string): Uint8Array => Buffer.from(key, 'base64');
+
+export const getMnemonic = (publicKey: Buffer) => Mnemonic.fromEntropy(publicKey);
 
 export const createKeypair = ({ pk, secretKey }: KeypairProps): Keypair => {
   const publicKey = toBuffer(pk);

@@ -1,14 +1,18 @@
 // @ts-ignore
-import { Keypair } from '@helium/crypto';
+import { Keypair, Mnemonic } from '@helium/crypto';
 import CryptoES from 'crypto-es';
 import { storeItem, fetchItem } from 'src/lib/store';
 import { convertToArray, toBase64 } from './vault.utils';
 import JsonFormatter from './cryptoJsonFormatter';
 
-interface CreateVault {
-  seedPhrase: string;
-  walletName?: string;
-}
+// @ts-ignore
+window.convertToArray = convertToArray;
+// @ts-ignore
+window.Keypair = Keypair;
+// @ts-ignore
+window.toBase64 = toBase64;
+// @ts-ignore
+window.Mnemonic = Mnemonic;
 
 export const createVault = async ({ seedPhrase, walletName }: CreateVault): Promise<string> => {
   const existingVaults = await fetchItem('vaults');

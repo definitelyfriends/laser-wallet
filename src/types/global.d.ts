@@ -16,3 +16,13 @@ interface StoredVault {
   publicKey: string;
   walletName: string;
 }
+
+interface CreateVault {
+  seedPhrase: string;
+  walletName?: string;
+}
+
+interface KeypairProps {
+  pk: string;
+  secretKey: string;
+}
