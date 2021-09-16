@@ -6,6 +6,7 @@ declare global {
 }
 
 declare module 'react-identicons';
+declare module '*.md';
 
 window.Buffer = Buffer;
 window.localforage = localforage;
