@@ -1,6 +1,10 @@
-[0.0.0.4 - 09/09/2021]
+[0.0.0.5 - 09/09/2021]
 
-🚀 Updates
+🐛 Bug Fixes
+
+- No changes, bumped number to re-upload to Firefox Extension Store
+
+[0.0.0.4 - 09/09/2021]
 
 🐛 Bug Fixes
 
