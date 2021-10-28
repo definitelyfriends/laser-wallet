@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "0.0.0.4",
+  "version": "0.0.0.5",
   "description": "An HNT Wallet in your Browser",
   "name": "Laser",
   "options_ui": {

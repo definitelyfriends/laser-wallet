@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { createVault } from 'lib/vault';
+import { createVault, watchAddress } from 'lib/vault';
 import { storeItem } from 'lib/store';
 import { useBooleanCheckboxes } from 'hooks/useBooleanCheckbox';
 import { TextArea } from 'components/Common';
@@ -26,8 +26,16 @@ const ImportSeed: React.FC = () => {
   const [seedPhrase, setSeedPhrase] = useState('');
   const [walletName, setWalletName] = useState('');
 
+  const isAddress = (seedPhrase: string): boolean => !seedPhrase.includes(' ');
+
   const importAccount = async () => {
-    const created: string = await createVault({ seedPhrase, walletName });
+    let created: string;
+
+    if (isAddress(seedPhrase)) {
+      created = await watchAddress({ address: seedPhrase, walletName });
+    } else {
+      created = await createVault({ seedPhrase, walletName });
+    }
 
     if (created) {
       storeItem('address', created);
@@ -39,12 +47,10 @@ const ImportSeed: React.FC = () => {
 
   return (
     <Container>
-      <BoldH2>Enter key phrase</BoldH2>
-      <Subtitle>
-        Type or paste your wallet key phrase below. Leave a space between each word.
-      </Subtitle>
+      <BoldH2>Enter key phrase or address</BoldH2>
+      <Subtitle>Type or paste your wallet key phrase or public address below.</Subtitle>
       <InputContainer>
-        <Label>Wallet Key Phrase</Label>
+        <Label>Wallet Key Phrase or Public Address</Label>
         {checked ? (
           <TextArea onChange={e => setSeedPhrase(e.target.value)} defaultValue={seedPhrase} />
         ) : (

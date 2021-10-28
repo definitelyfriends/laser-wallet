@@ -23,6 +23,11 @@ interface CreateVault {
   walletName?: string;
 }
 
+type WatchAddress = {
+  address: string;
+  walletName?: string;
+};
+
 interface KeypairProps {
   pk: string;
   secretKey: string;
