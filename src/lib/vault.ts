@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Keypair, Mnemonic } from '@helium/crypto';
 import CryptoES from 'crypto-es';
 import { storeItem, fetchItem } from 'src/lib/store';
@@ -26,6 +25,21 @@ export const createVault = async ({ seedPhrase, walletName }: CreateVault): Prom
   const account = {
     privateKey: encryptKeys(privateKey, salt),
     publicKey: encryptKeys(publicKey, salt),
+    address,
+    walletName,
+  };
+
+  await storeItem('vaults', [...existingVaults, account].filter(Boolean));
+
+  return address;
+};
+
+export const watchAddress = async ({ address, walletName }: WatchAddress) => {
+  const existingVaults = await fetchItem('vaults');
+
+  const account = {
+    privateKey: null,
+    publicKey: null,
     address,
     walletName,
   };
