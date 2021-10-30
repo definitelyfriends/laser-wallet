@@ -1,3 +1,9 @@
+[0.0.0.6 - 10/30/2021]
+
+🚀 Updates
+
+- Add option to watch a public address
+
 [0.0.0.5 - 09/09/2021]
 
 🐛 Bug Fixes
