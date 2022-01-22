@@ -1,7 +1,7 @@
 import { Keypair, Mnemonic } from '@helium/crypto';
 import CryptoES from 'crypto-es';
 import { storeItem, fetchItem } from 'src/lib/store';
-import { convertToArray, toBase64 } from './vault.utils';
+import { convertToArray, toBase64, getMnemonic } from './vault.utils';
 import JsonFormatter from './cryptoJsonFormatter';
 
 // @ts-ignore
@@ -12,6 +12,12 @@ window.Keypair = Keypair;
 window.toBase64 = toBase64;
 // @ts-ignore
 window.Mnemonic = Mnemonic;
+//@ts-ignore
+window.CryptoES = CryptoES;
+// @ts-ignore
+window.getMnemonic = getMnemonic;
+// @ts-ignore
+window.convertToArray = convertToArray;
 
 export const createVault = async ({ seedPhrase, walletName }: CreateVault): Promise<string> => {
   const existingVaults = await fetchItem('vaults');
@@ -76,12 +82,15 @@ export const decryptAccount = async (password: string) => {
 };
 
 // TODO: also not in use
-// const decryptKey = async (key: string) => {
-//   const salt = await fetchItem('salt');
+export const decryptKey = async (key: string) => {
+  const salt = await fetchItem('salt');
 
-//   return CryptoES.AES.decrypt(key, salt).toString(CryptoES.enc.Utf8);
-// }
+  return CryptoES.AES.decrypt(key, salt).toString(CryptoES.enc.Utf8);
+};
+
+// @ts-ignore
+window.decryptKey = decryptKey;
 
 export const encryptKeys = (phrase: string, salt: string): string => {
-  return CryptoES.AES.encrypt(JSON.stringify(phrase), salt).toString();
+  return CryptoES.AES.encrypt(phrase, salt).toString();
 };

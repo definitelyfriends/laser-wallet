@@ -1,3 +1,9 @@
+[0.0.0.7 - 12/22/2021]
+
+🚀 Updates
+
+- None; bumping the number to appease the Firefox Extension Store gods
+
 [0.0.0.6 - 10/30/2021]
 
 🚀 Updates
