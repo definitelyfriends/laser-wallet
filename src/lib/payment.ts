@@ -1,13 +1,14 @@
 import { Address, Keypair } from '@helium/crypto';
 import { PaymentV1, Transaction } from '@helium/transactions';
 import { Client } from '@helium/http';
-// import { Balance, CurrencyType } from '@helium/currency';
 import { fetchItem } from 'src/lib/store';
 import { decryptKey } from './vault';
 import { toBuffer } from './vault.utils';
 import * as buffer from 'buffer';
 
 window.Buffer = buffer.Buffer;
+
+const BONES = 100000000;
 
 export const sendPayment = async (payee: string, amount: number) => {
   const client = new Client();
@@ -45,7 +46,7 @@ export const sendPayment = async (payee: string, amount: number) => {
   // get the speculative nonce for the keypair
   const account = await client.accounts.get(from.address.b58);
 
-  const calculatedHNT = 100000000 * amount;
+  const calculatedHNT = BONES * amount;
 
   const paymentTxn = new PaymentV1({
     payer: from.address,
@@ -59,9 +60,3 @@ export const sendPayment = async (payee: string, amount: number) => {
   // submit the serialized txn to the Blockchain HTTP API
   client.transactions.submit(signedPaymentTxn.toString());
 };
-
-// calculate max sendable amount
-// const feeInDC = new Balance(paymentTxnForFee.fee, CurrencyType.dataCredit);
-// const oracle = await client.oracle.getCurrentPrice();
-// const feeInHNT = feeInDC.toNetworkTokens(oracle.price);
-// const amountToSend = account.balance.minus(feeInHNT).integerBalance;
