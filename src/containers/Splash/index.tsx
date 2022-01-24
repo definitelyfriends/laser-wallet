@@ -125,6 +125,11 @@ const Splash = () => {
             aria-invalid="false"
             dir="auto"
             onChange={e => setPassword(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === 'Return') {
+                unlockAccount();
+              }
+            }}
             defaultValue={password}
           />
           <WideButtonContainer>
