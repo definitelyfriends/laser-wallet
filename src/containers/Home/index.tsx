@@ -27,6 +27,7 @@ const Settings = React.lazy(() => import('containers/Settings'));
 const ImportSeed = React.lazy(() => import('containers/Onboarding/ImportSeed'));
 const Password = React.lazy(() => import('containers/Onboarding/Password'));
 const Receive = React.lazy(() => import('containers/Receive'));
+const Send = React.lazy(() => import('containers/Send'));
 
 const FIFTEEN_MINUTES = 900000;
 
@@ -82,6 +83,14 @@ const Home = () => {
     return (
       <Suspense fallback={<div>loading...</div>}>
         <Receive />
+      </Suspense>
+    );
+  }
+
+  if (path === PathStateEnum.send) {
+    return (
+      <Suspense fallback={<div>loading...</div>}>
+        <Send />
       </Suspense>
     );
   }

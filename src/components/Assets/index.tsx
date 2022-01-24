@@ -72,7 +72,9 @@ const Assets: React.FC = () => {
         <Button color="middark" onClick={() => setPath(PathStateEnum.receive)}>
           Receive
         </Button>
-        <Button color="purple">Send (coming soon!)</Button>
+        <Button color="purple" onClick={() => setPath(PathStateEnum.send)}>
+          Send
+        </Button>
       </Container>
       <ul>
         {data?.pages.map((page, i) =>
