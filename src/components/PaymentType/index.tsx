@@ -58,6 +58,7 @@ const normalizePaymentVersions = (activity: any) => {
   };
 };
 
+// @ts-ignore
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo('en-US');
 
@@ -65,6 +66,7 @@ const humanizeTimestamp = (time: number): string => {
   const milliseconds = time * 1000;
   const date = new Date(milliseconds);
 
+  // @ts-ignore
   return timeAgo.format(date);
 };
 
